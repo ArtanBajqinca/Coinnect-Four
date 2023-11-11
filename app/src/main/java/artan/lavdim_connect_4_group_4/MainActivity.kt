@@ -24,7 +24,6 @@ class MainActivity : ComponentActivity() {
                 ) {
                     Greeting("LavdimNatiadaasdon")
                     Text(text = "poggers")
-                    Text(text = "Merge test")
                 }
             }
         }
