@@ -46,5 +46,5 @@ fun GreetingPreview() {
 
 @Composable
 fun Pog() {
-    Text(text = "Lavdim comp")
+    Text(text = "Lavdim c")
 }
