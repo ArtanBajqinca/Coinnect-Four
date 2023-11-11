@@ -57,5 +57,5 @@ fun pog2() {
 
 @Composable
 fun Pog3() {
-    
+    Text(text = "Howdy Artan!")
 }
