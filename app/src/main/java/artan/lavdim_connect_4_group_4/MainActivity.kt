@@ -23,6 +23,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     Text(text = "Artan changed this from his branch")
+                    Text(text = "Hej")
                 }
             }
         }
