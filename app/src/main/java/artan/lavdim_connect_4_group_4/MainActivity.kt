@@ -43,3 +43,8 @@ fun GreetingPreview() {
         Greeting("Android")
     }
 }
+
+@Composable
+fun Pog() {
+    Text(text = "Lavdim comp")
+}
