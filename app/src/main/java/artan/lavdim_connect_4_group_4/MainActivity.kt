@@ -22,8 +22,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("LavdimNatiadaasdon")
-                    Text(text = "poggers")
+                    Text(text = "Artan changed this from his branch")
                 }
             }
         }
