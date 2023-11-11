@@ -52,7 +52,7 @@ fun Pog() {
 
 @Composable
 fun pog2() {
-    Text(text = "Lavdim Changed that shit")
+    Text(text = "Artan Changes")
 }
 
 @Composable
