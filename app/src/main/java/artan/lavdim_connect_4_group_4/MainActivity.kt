@@ -44,3 +44,11 @@ fun GreetingPreview() {
         Greeting("Android")
     }
 }
+
+@Composable
+fun Artan(name: String, modifier: Modifier = Modifier) {
+    Text(
+        text = "Hello $name!",
+        modifier = modifier
+    )
+}
