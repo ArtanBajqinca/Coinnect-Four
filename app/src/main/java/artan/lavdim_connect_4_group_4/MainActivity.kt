@@ -54,3 +54,8 @@ fun Pog() {
 fun pog2() {
     
 }
+
+@Composable
+fun Pog3() {
+    
+}
