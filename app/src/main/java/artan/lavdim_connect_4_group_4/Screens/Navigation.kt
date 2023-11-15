@@ -15,7 +15,7 @@ fun Navigation() {
             StartScreen(navController = navController)
         }
         composable(
-            route = Screen.DetailScreen.route + "/{name}",
+            route = Screen.LobbyScreen.route + "/{name}",
             arguments = listOf(
                 navArgument("name") {
                     type = NavType.StringType
