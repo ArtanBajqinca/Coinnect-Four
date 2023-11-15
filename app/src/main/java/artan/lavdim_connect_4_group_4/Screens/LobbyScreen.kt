@@ -6,14 +6,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
 
 @Composable
-fun LobbyScreen(name: String?) {
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = Modifier.fillMaxSize()
-    ){
-        Text(
-            text = "Hello, $name")
-    }
+fun LobbyScreen(navController: NavController) {
+
 }

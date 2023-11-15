@@ -21,30 +21,7 @@ import androidx.navigation.NavController
 
 @Composable
 fun StartScreen(navController: NavController) {
-    var text by remember {
-        mutableStateOf("")
-    }
-    Column(
-        verticalArrangement = Arrangement.Center,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 50.dp)
-    ) {
-        TextField(
-            value = text,
-            onValueChange = {text = it},
-            modifier = Modifier.fillMaxWidth()
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        Button(
-            onClick = {
-                navController.navigate(Screen.DetailScreen.withArgs(text))
-            },
-            modifier = Modifier.align(Alignment.End)
-        ) {
-            Text(
-                text = "To LobbyScreen"
-            )
-        }
-    }
+
+
+
 }

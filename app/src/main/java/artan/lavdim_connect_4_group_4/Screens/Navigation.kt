@@ -12,20 +12,15 @@ fun Navigation() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Screen.StartScreen.route) {
         composable(route = Screen.StartScreen.route) {
-            StartScreen(navController = navController)
+            StartScreen(
+                navController = navController
+            )
         }
         composable(
             route = Screen.LobbyScreen.route + "/{name}",
-            arguments = listOf(
-                navArgument("name") {
-                    type = NavType.StringType
-                    defaultValue = "Lavdim"
-                    nullable = true
-                }
-            )
-        ) { entry ->
+        ) {
             LobbyScreen(
-                name = entry.arguments?.getString("name")
+                navController = navController
             )
         }
     }
