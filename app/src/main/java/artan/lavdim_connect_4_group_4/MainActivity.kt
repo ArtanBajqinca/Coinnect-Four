@@ -22,40 +22,10 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    // comment
+
                 }
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    Artanlavdim_Connect_4_Group_4Theme {
-        Greeting("Android")
-    }
-}
-
-@Composable
-fun Pog() {
-    Text(text = "Lavdim c")
-}
-
-@Composable
-fun pog2() {
-    Text(text = "Artan Changes")
-}
-
-@Composable
-fun Pog3() {
-    Text(text = "Howdy Artan!")
-}
