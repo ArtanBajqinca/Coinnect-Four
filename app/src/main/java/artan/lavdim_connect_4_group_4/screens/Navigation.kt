@@ -17,6 +17,11 @@ fun Navigation() {
                 navController = navController
             )
         }
+        composable(route = Screen.LobbyScreen.route) {
+             LobbyScreen(
+                 navController = navController
+                )
+        }
     }
 }
 
