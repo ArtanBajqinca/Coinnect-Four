@@ -39,8 +39,7 @@ fun SplashScreen(navController: NavController) {
     }
     Box(
         modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFF1E1E1E)),
+            .fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         Image(
