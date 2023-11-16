@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
@@ -37,6 +38,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -87,23 +89,26 @@ fun StartScreen(navController: NavController) {
                     fontWeight = FontWeight.Bold,
                     fontFamily = AvenirRoundedFontFamily,
                     fontSize = 24.sp,
+
                 ),
                 colors = TextFieldDefaults.textFieldColors(
                     containerColor = Color.Transparent,
                     cursorColor = Color.White,
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent,
-                )
+                ),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Text,
+                    autoCorrect = false
+                ),
             )
-
-
         }
 
         Spacer(modifier = Modifier.height(27.dp))
 
         Button(
             onClick = {
-                // action
+                navController.navigate("LobbyScreen/${username.value}")
             },
             shape = RoundedCornerShape(12.dp),
             colors = ButtonDefaults.buttonColors(
