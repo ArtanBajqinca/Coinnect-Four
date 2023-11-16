@@ -15,7 +15,7 @@ class MainActivity : ComponentActivity() {
         setContent {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = Color(0x1E1E1E)
+                    color = Color(0xFF1E1E1E)
                 ) {
                     Navigation()
                 }
