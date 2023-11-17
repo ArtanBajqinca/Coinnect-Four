@@ -108,7 +108,7 @@ fun StartScreen(navController: NavController) {
 
         Button(
             onClick = {
-                navController.navigate("LobbyScreen/${username.value}")
+                navController.navigate(Screen.LobbyScreen.route)
             },
             shape = RoundedCornerShape(12.dp),
             colors = ButtonDefaults.buttonColors(

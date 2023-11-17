@@ -17,10 +17,9 @@ fun Navigation() {
                 navController = navController
             )
         }
-        composable(route = "LobbyScreen/{username}") { backStackEntry ->
+        composable(route = Screen.LobbyScreen.route) {
             LobbyScreen(
-                navController = navController,
-                username = backStackEntry.arguments?.getString("username") ?: ""
+                navController = navController
             )
         }
         composable(route = Screen.GameScreen.route) {
