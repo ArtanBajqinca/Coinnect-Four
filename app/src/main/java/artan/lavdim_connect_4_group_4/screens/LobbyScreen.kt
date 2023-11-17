@@ -37,7 +37,7 @@ import androidx.navigation.NavController
 import artan.lavdim_connect_4_group_4.R
 
 @Composable
-fun LobbyScreen(navController: NavController, username: String) {
+fun LobbyScreen(navController: NavController) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
