@@ -23,6 +23,11 @@ fun Navigation() {
                 username = backStackEntry.arguments?.getString("username") ?: ""
             )
         }
+        composable(route = Screen.GameScreen.route) {
+            GameScreen(
+                navController = navController
+            )
+        }
     }
 }
 
