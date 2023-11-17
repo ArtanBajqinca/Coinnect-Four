@@ -180,7 +180,7 @@ fun LobbyScreen(navController: NavController, username: String) {
 
                 Button(
                     onClick = {
-
+                              navController.navigate(Screen.GameScreen.route)
                     },
                     shape = RoundedCornerShape(12.dp),
                     colors = ButtonDefaults.buttonColors(
