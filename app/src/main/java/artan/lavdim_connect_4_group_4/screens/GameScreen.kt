@@ -1,27 +1,190 @@
 package artan.lavdim_connect_4_group_4.screens
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Arrangement.Center
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import artan.lavdim_connect_4_group_4.R
 
 @Composable
 fun GameScreen(navController: NavController) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(200.dp)
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally, // Centers the content horizontally in the Column
+            verticalArrangement = Arrangement.Top // Aligns content to the top of the Column
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(150.dp)
+                    .background(
+                        color = Color(0xFF383838),
+                        shape = RoundedCornerShape(
+                            topStart = 0.dp,
+                            topEnd = 0.dp,
+                            bottomStart = 30.dp,
+                            bottomEnd = 30.dp
+                        )
+                    ),
+                horizontalArrangement = Center
+            ) {
+                Column(
+                    horizontalAlignment = CenterHorizontally
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .padding(start = 17.dp, top = 29.dp)
+                            .width(130.dp)
+                            .height(40.dp)
+                            .background(Color.Transparent)
+                            .border(
+                                width = 2.dp,
+                                color = Color(0xFFD9D9D9),
+                                shape = RoundedCornerShape(20.dp),
+                            )
+                    ) {
+                        Text(
+                            "Arctanium",
+                            color = Color(0xFFD9D9D9),
+                            fontWeight = FontWeight.Bold,
+                            fontFamily = AvenirRoundedFontFamily,
+                            fontSize = 15.sp,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .align(Alignment.Center)
+                        )
+                    }
+                    Box(
+                        modifier = Modifier
+                            .padding(top = 15.dp)
+                            .align(CenterHorizontally)
+                    ){
+                        Image(
+                            painter = painterResource(id = R.drawable.gold_coin),
+                            contentDescription = "Gold Coin",
+                            modifier = Modifier
+                                .width(50.dp)
+                                .height(50.dp)
+                        )
+                    }
+                }
 
-    Text(
-        "GameScreen",
-        color = Color(0xFFD9D9D9),
-        fontWeight = FontWeight.Bold,
-        fontFamily = AvenirRoundedFontFamily,
-        fontSize = 40.sp,
-        textAlign = TextAlign.Center,
-        modifier = Modifier.padding(50.dp)
-    )
+                Text(
+                    "VS",
+                    color = Color(0xFFD9D9D9),
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = AvenirRoundedFontFamily,
+                    fontSize = 20.sp,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .padding(start = 40.dp, top = 38.dp, end = 40.dp)
+                )
 
+                Column(
+                    horizontalAlignment = CenterHorizontally
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .padding(start = 0.dp, top = 29.dp)
+                            .width(130.dp)
+                            .height(40.dp)
+                            .background(Color.Transparent)
+                            .border(
+                                width = 2.dp,
+                                color = Color(0xFFD9D9D9),
+                                shape = RoundedCornerShape(20.dp),
+                            )
+                    ) {
+                        Text(
+                            "LavdimNation",
+                            color = Color(0xFFD9D9D9),
+                            fontWeight = FontWeight.Bold,
+                            fontFamily = AvenirRoundedFontFamily,
+                            fontSize = 15.sp,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.align(Alignment.Center)
+                        )
+                    }
+                    Column(
+                        modifier = Modifier
+                            .padding(top = 15.dp)
+                            .align(CenterHorizontally)
+                    ){
+                        Image(
+                            painter = painterResource(id = R.drawable.silver_coin),
+                            contentDescription = "Silver Coin",
+                            modifier = Modifier
+                                .width(50.dp)
+                                .height(50.dp)
+                        )
+                    }
+                }
+            }
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = CenterHorizontally
+
+            ) {
+                Text(
+                    text = "Artan's turn",
+                    color = Color(0xFFD9D9D9),
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = AvenirRoundedFontFamily,
+                    fontSize = 40.sp,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .padding(top = 80.dp)
+                )
+                Column {
+                    Image(
+                        painter = painterResource(id = R.drawable.board),
+                        contentDescription = "Board",
+                        modifier = Modifier
+                            .width(380.dp)
+                            .height(380.dp)
+                    )
+                }
+                Column(
+                    modifier = Modifier
+                        .padding(top = 40.dp)
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.coinnectfour),
+                        contentDescription = "Logo",
+                        modifier = Modifier
+                            .graphicsLayer(scaleX = 0.4f, scaleY = 0.4f)
+                    )
+                }
+
+            }
+
+        }
+    }
 }
+
