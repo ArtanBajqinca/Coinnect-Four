@@ -36,8 +36,9 @@ fun GameScreen(navController: NavController) {
             .height(200.dp)
     ) {
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally, // Centers the content horizontally in the Column
-            verticalArrangement = Arrangement.Top // Aligns content to the top of the Column
+            verticalArrangement = Center,
+            horizontalAlignment = CenterHorizontally
+
         ) {
             Row(
                 modifier = Modifier
@@ -59,10 +60,9 @@ fun GameScreen(navController: NavController) {
                 ) {
                     Box(
                         modifier = Modifier
-                            .padding(start = 17.dp, top = 29.dp)
+                            .padding(start = 0.dp, top = 29.dp)
                             .width(130.dp)
                             .height(40.dp)
-                            .background(Color.Transparent)
                             .border(
                                 width = 2.dp,
                                 color = Color(0xFFD9D9D9),
@@ -106,9 +106,7 @@ fun GameScreen(navController: NavController) {
                         .padding(start = 40.dp, top = 38.dp, end = 40.dp)
                 )
 
-                Column(
-                    horizontalAlignment = CenterHorizontally
-                ) {
+                Column() {
                     Box(
                         modifier = Modifier
                             .padding(start = 0.dp, top = 29.dp)
@@ -128,7 +126,8 @@ fun GameScreen(navController: NavController) {
                             fontFamily = AvenirRoundedFontFamily,
                             fontSize = 15.sp,
                             textAlign = TextAlign.Center,
-                            modifier = Modifier.align(Alignment.Center)
+                            modifier = Modifier
+                                .align(Alignment.Center)
                         )
                     }
                     Column(
@@ -147,8 +146,8 @@ fun GameScreen(navController: NavController) {
                 }
             }
             Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = CenterHorizontally
+                verticalArrangement = Center,
+                horizontalAlignment = CenterHorizontally,
 
             ) {
                 Text(
@@ -161,13 +160,16 @@ fun GameScreen(navController: NavController) {
                     modifier = Modifier
                         .padding(top = 80.dp)
                 )
-                Column {
+                Column(
+                    modifier = Modifier
+                    ) {
                     Image(
                         painter = painterResource(id = R.drawable.board),
                         contentDescription = "Board",
                         modifier = Modifier
                             .width(380.dp)
                             .height(380.dp)
+                            .align(CenterHorizontally)
                     )
                 }
                 Column(
