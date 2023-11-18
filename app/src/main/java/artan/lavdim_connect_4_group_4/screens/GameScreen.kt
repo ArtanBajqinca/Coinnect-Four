@@ -3,6 +3,7 @@ package artan.lavdim_connect_4_group_4.screens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Arrangement.Center
 import androidx.compose.foundation.layout.Box
@@ -70,7 +71,7 @@ fun GameScreen(navController: NavController) {
                             )
                     ) {
                         Text(
-                            "Arctanium",
+                            "Arctan",
                             color = Color(0xFFD9D9D9),
                             fontWeight = FontWeight.Bold,
                             fontFamily = AvenirRoundedFontFamily,
@@ -103,7 +104,7 @@ fun GameScreen(navController: NavController) {
                     fontSize = 20.sp,
                     textAlign = TextAlign.Center,
                     modifier = Modifier
-                        .padding(start = 40.dp, top = 38.dp, end = 40.dp)
+                        .padding(start = 30.dp, top = 38.dp, end = 30.dp)
                 )
 
                 Column() {
@@ -151,14 +152,14 @@ fun GameScreen(navController: NavController) {
 
             ) {
                 Text(
-                    text = "Artan's turn",
+                    text = "Arctan's turn",
                     color = Color(0xFFD9D9D9),
                     fontWeight = FontWeight.Bold,
                     fontFamily = AvenirRoundedFontFamily,
                     fontSize = 40.sp,
                     textAlign = TextAlign.Center,
                     modifier = Modifier
-                        .padding(top = 80.dp)
+                        .padding(top = 60.dp)
                 )
                 Column(
                     modifier = Modifier
@@ -167,20 +168,24 @@ fun GameScreen(navController: NavController) {
                         painter = painterResource(id = R.drawable.board),
                         contentDescription = "Board",
                         modifier = Modifier
-                            .width(380.dp)
-                            .height(380.dp)
+                            .width(360.dp)
+                            .height(360.dp)
                             .align(CenterHorizontally)
+                            .padding(top = 60.dp)
+                            .clickable {
+                                navController.navigate(Screen.ResultScreen.route)
+                            }
                     )
                 }
                 Column(
                     modifier = Modifier
-                        .padding(top = 40.dp)
+                        .padding(top = 80.dp)
                 ) {
                     Image(
                         painter = painterResource(id = R.drawable.coinnectfour),
                         contentDescription = "Logo",
                         modifier = Modifier
-                            .graphicsLayer(scaleX = 0.4f, scaleY = 0.4f)
+                            .width(100.dp)
                     )
                 }
 

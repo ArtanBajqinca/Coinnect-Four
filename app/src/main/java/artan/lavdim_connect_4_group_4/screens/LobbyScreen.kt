@@ -43,12 +43,14 @@ fun LobbyScreen(navController: NavController) {
         modifier = Modifier
             .fillMaxWidth()
     ) {
+        Spacer(modifier = Modifier.height(50.dp))
         Image(
             painter = painterResource(id = R.drawable.coinnectfour),
             contentDescription = "Logo",
             modifier = Modifier
-                .graphicsLayer(scaleX = 0.4f, scaleY = 0.4f)
+                .width(100.dp)
         )
+        Spacer(modifier = Modifier.height(30.dp))
         Text(
             text = "LOBBY",
             color = Color(0xFFD9D9D9),
@@ -71,8 +73,8 @@ fun LobbyScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(15.dp))
         Column(
           modifier = Modifier
-              .width(350.dp)
-              .height(250.dp)
+              .width(320.dp)
+              .height(200.dp)
               .border(width = 4.dp, color = Color(0xFFBAA153), shape = RoundedCornerShape(15.dp))
         ){
             Row(
@@ -81,12 +83,14 @@ fun LobbyScreen(navController: NavController) {
                     .padding(start = 20.dp, top = 20.dp)
             ) {
                 Text(
-                    text = "Arctanium",
+                    text = "Arctan",
                     color = Color(0xFFD9D9D9),
                     fontWeight = FontWeight.Bold,
                     fontFamily = AvenirRoundedFontFamily,
                     fontSize = 20.sp,
-                    modifier = Modifier.width(140.dp)
+                    modifier = Modifier
+                        .width(150.dp)
+                        .padding(end = 10.dp)
                 )
                 Icon(
                     painter = painterResource(id =  R.drawable.signal_solid),
@@ -102,12 +106,14 @@ fun LobbyScreen(navController: NavController) {
                     .padding(start = 20.dp, top = 15.dp)
             ) {
                 Text(
-                    text = "PunaniSlayer",
+                    text = "LavdimNation",
                     color = Color(0xFFD9D9D9),
                     fontWeight = FontWeight.Bold,
                     fontFamily = AvenirRoundedFontFamily,
                     fontSize = 20.sp,
-                    modifier = Modifier.width(140.dp)
+                    modifier = Modifier
+                        .width(150.dp)
+
                 )
                 Icon(
                     painter = painterResource(id =  R.drawable.signal_solid),
@@ -142,7 +148,7 @@ fun LobbyScreen(navController: NavController) {
             }
 
         }
-        Spacer(modifier = Modifier.height(15.dp))
+        Spacer(modifier = Modifier.height(20.dp))
         Text(
             text = "Incoming challenges",
             color = Color(0xFFD9D9D9),
@@ -151,18 +157,18 @@ fun LobbyScreen(navController: NavController) {
             fontSize = 20.sp,
             textAlign = TextAlign.Center,
         )
-        Spacer(modifier = Modifier.height(15.dp))
+        Spacer(modifier = Modifier.height(20.dp))
         Column(
             verticalArrangement = Arrangement.spacedBy(10.dp),
             modifier = Modifier
-                .width(350.dp)
-                .height(250.dp)
+                .width(320.dp)
+                .height(200.dp)
                 .border(width = 4.dp, color = Color(0xFFBAA153), shape = RoundedCornerShape(15.dp))
         ){
             Text(
                 text = buildAnnotatedString {
                     withStyle(style = SpanStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold, fontFamily = AvenirRoundedFontFamily, color = Color(0xFFD9D9D9))) {
-                        append("PunaniSlayer ")
+                        append("LavdimNation ")
                     }
                     append("\n") // Line break
                     withStyle(style = SpanStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold, fontFamily = AvenirRoundedFontFamily, color = Color(0xFFD9D9D9))) {
