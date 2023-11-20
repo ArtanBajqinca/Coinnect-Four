@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -39,7 +38,7 @@ import artan.lavdim_connect_4_group_4.viewModels.ViewModel
 
 @Composable
 fun LobbyScreen(navController: NavController) {
-
+    val player = ViewModel.currentPlayer
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -85,7 +84,7 @@ fun LobbyScreen(navController: NavController) {
                     .padding(start = 20.dp, top = 20.dp)
             ) {
                 Text(
-                    text = "Arctan",
+                    text = player.name,
                     color = Color(0xFFD9D9D9),
                     fontWeight = FontWeight.Bold,
                     fontFamily = AvenirRoundedFontFamily,

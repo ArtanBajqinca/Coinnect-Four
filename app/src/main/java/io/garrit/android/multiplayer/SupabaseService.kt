@@ -1,5 +1,6 @@
 package io.garrit.android.multiplayer
 
+import android.os.Parcelable
 import androidx.compose.runtime.mutableStateListOf
 import io.github.jan.supabase.createSupabaseClient
 import io.github.jan.supabase.realtime.PresenceAction

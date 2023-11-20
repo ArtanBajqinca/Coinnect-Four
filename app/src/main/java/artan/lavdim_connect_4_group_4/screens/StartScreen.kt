@@ -2,6 +2,7 @@
 
 package artan.lavdim_connect_4_group_4.screens
 
+import android.os.Bundle
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -37,6 +38,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import artan.lavdim_connect_4_group_4.R
 import artan.lavdim_connect_4_group_4.viewModels.ViewModel
+import io.garrit.android.multiplayer.Player
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -101,7 +103,9 @@ fun StartScreen(navController: NavController) {
 
         Button(
             onClick = {
-                    navController.navigate(Screen.LobbyScreen.route)
+                val currentPlayer = Player(name = username.value)
+                ViewModel.currentPlayer = currentPlayer
+                navController.navigate(Screen.LobbyScreen.route)
             },
             shape = RoundedCornerShape(12.dp),
             colors = ButtonDefaults.buttonColors(
