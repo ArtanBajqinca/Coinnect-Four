@@ -33,14 +33,16 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import artan.lavdim_connect_4_group_4.R
-import artan.lavdim_connect_4_group_4.screens.AvenirRoundedFontFamily
+import artan.lavdim_connect_4_group_4.viewModels.ViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StartScreen(navController: NavController) {
     val username = remember { mutableStateOf("") }
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -99,7 +101,7 @@ fun StartScreen(navController: NavController) {
 
         Button(
             onClick = {
-                navController.navigate(Screen.LobbyScreen.route)
+                    navController.navigate(Screen.LobbyScreen.route)
             },
             shape = RoundedCornerShape(12.dp),
             colors = ButtonDefaults.buttonColors(
