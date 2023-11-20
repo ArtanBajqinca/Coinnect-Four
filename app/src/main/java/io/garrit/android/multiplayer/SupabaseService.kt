@@ -135,9 +135,9 @@ object SupabaseService {
             _client.realtime.connect()
         }
         if (_lobby == null) {
-            this.player = player
+            SupabaseService.player = player
             println("Create Channel")
-            val lobby = _client.realtime.createChannel("lobby-${_type}")
+            val lobby = _client.realtime.createChannel("lobby-$_type")
 
             val presenceJob = lobby.presenceChangeFlow()
                 .onEach {
