@@ -12,6 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import io.garrit.android.multiplayer.Game
 import io.garrit.android.multiplayer.SupabaseService
 import kotlinx.coroutines.launch
 
@@ -23,5 +24,16 @@ class SharedViewModel : ViewModel() {
                         SupabaseService.joinLobby(player)
                 }
         }
+
+        fun invite(player: Player){
+                viewModelScope.launch {
+                        SupabaseService.invite(player)
+                }
+        }
+
+        fun joinGame(game: Game){
+
+        }
+
 }
 
