@@ -26,7 +26,9 @@ import androidx.navigation.NavController
 import artan.lavdim_connect_4_group_4.R
 import artan.lavdim_connect_4_group_4.viewModels.SharedViewModel
 import io.garrit.android.multiplayer.Game
+import io.garrit.android.multiplayer.GameEvent
 import io.garrit.android.multiplayer.Player
+import io.garrit.android.multiplayer.SupabaseService
 
 @Composable
 fun LobbyScreen(navController: NavController, viewModel: SharedViewModel) {
@@ -66,8 +68,8 @@ fun LobbyScreen(navController: NavController, viewModel: SharedViewModel) {
                 .width(320.dp)
                 .height(200.dp)
                 .border(width = 4.dp, color = Color(0xFFBAA153), shape = RoundedCornerShape(15.dp))
-        ){
-            items(viewModel.users){ player ->
+        ) {
+            items(SupabaseService.users) { player ->
                 userCard(player = player, viewModel)
             }
         }
@@ -88,8 +90,8 @@ fun LobbyScreen(navController: NavController, viewModel: SharedViewModel) {
                 .width(320.dp)
                 .height(300.dp)
                 .border(width = 4.dp, color = Color(0xFFBAA153), shape = RoundedCornerShape(15.dp))
-        ){
-            items(viewModel.opponents){ player ->
+        ) {
+            items(SupabaseService.games) { player ->
                 challangeCard(player = player, viewModel)
             }
         }
@@ -105,7 +107,7 @@ fun userCard(player: Player, viewModel: SharedViewModel) {
             .padding(start = 20.dp, top = 20.dp)
     ) {
         Text(
-            text = player.name ,
+            text = player.name,
             color = Color(0xFFD9D9D9),
             fontWeight = FontWeight.Bold,
             fontFamily = AvenirRoundedFontFamily,
@@ -115,7 +117,7 @@ fun userCard(player: Player, viewModel: SharedViewModel) {
                 .padding(end = 10.dp)
         )
         Icon(
-            painter = painterResource(id =  R.drawable.signal_solid),
+            painter = painterResource(id = R.drawable.signal_solid),
             contentDescription = "Online Status",
             tint = Color(0xFF42A54A),
             modifier = Modifier
@@ -150,22 +152,28 @@ fun userCard(player: Player, viewModel: SharedViewModel) {
 @Composable
 fun challangeCard(player: Game, viewModel: SharedViewModel) {
 
-    Column(){
+    Column() {
         Text(
             text = buildAnnotatedString {
-                withStyle(style = SpanStyle(
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = AvenirRoundedFontFamily,
-                    color = Color(0xFFD9D9D9))) {
+                withStyle(
+                    style = SpanStyle(
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = AvenirRoundedFontFamily,
+                        color = Color(0xFFD9D9D9)
+                    )
+                ) {
                     append(player.player1.name)
                 }
                 append("\n") // Line break
-                withStyle(style = SpanStyle(
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = AvenirRoundedFontFamily,
-                    color = Color(0xFFD9D9D9))) {
+                withStyle(
+                    style = SpanStyle(
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = AvenirRoundedFontFamily,
+                        color = Color(0xFFD9D9D9)
+                    )
+                ) {
                     append("challenges you!")
                 }
             },
@@ -180,7 +188,7 @@ fun challangeCard(player: Game, viewModel: SharedViewModel) {
         ) {
             Button(
                 onClick = {
-//                    navController.navigate(Screen.GameScreen.route)
+                    viewModel.acceptInvite(player)
                 },
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(
@@ -192,7 +200,7 @@ fun challangeCard(player: Game, viewModel: SharedViewModel) {
                     .height(25.dp)
             ) {
                 Text(
-                    "Accept",
+                    text = "Accept",
                     color = Color(0xFFD9D9D9),
                     fontWeight = FontWeight.Bold,
                     fontFamily = AvenirRoundedFontFamily,
@@ -203,7 +211,7 @@ fun challangeCard(player: Game, viewModel: SharedViewModel) {
 
             Button(
                 onClick = {
-
+                          viewModel.declineInvite(player)
                 },
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(
@@ -215,7 +223,7 @@ fun challangeCard(player: Game, viewModel: SharedViewModel) {
                     .height(25.dp)
             ) {
                 Text(
-                    "Decline",
+                    text = "Decline",
                     color = Color(0xFFD9D9D9),
                     fontWeight = FontWeight.Bold,
                     fontFamily = AvenirRoundedFontFamily,
@@ -225,5 +233,4 @@ fun challangeCard(player: Game, viewModel: SharedViewModel) {
             }
         }
     }
-
 }

@@ -71,8 +71,8 @@ fun ResultScreen(navController: NavController) {
     Column(
         verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .padding(bottom = 56.dp)
+        modifier = Modifier
+            .padding(bottom = 56.dp)
     ) {
         Image(
             painter = painterResource(id = R.drawable.coinnectfour),

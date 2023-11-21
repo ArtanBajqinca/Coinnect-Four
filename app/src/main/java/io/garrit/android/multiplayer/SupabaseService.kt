@@ -196,9 +196,7 @@ object SupabaseService {
         _lobby = null
     }
 
-    private suspend fun joinGame(
-        game: Game
-    ) {
+    private suspend fun joinGame(game: Game) {
         currentGame = game
         println("Leave Lobby")
         leaveLobby()

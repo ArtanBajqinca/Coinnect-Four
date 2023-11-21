@@ -17,8 +17,6 @@ import io.garrit.android.multiplayer.SupabaseService
 import kotlinx.coroutines.launch
 
 class SharedViewModel : ViewModel() {
-        var users = SupabaseService.users
-        var opponents = SupabaseService.games
 
         fun joinLobby(player: Player){
                 viewModelScope.launch {
@@ -31,9 +29,16 @@ class SharedViewModel : ViewModel() {
                         SupabaseService.invite(player)
                 }
         }
+        fun declineInvite(game: Game){
+                viewModelScope.launch {
+                        SupabaseService.declineInvite(game)
+                }
+        }
 
-        fun joinGame(game: Game){
-
+        fun acceptInvite(game: Game){
+                viewModelScope.launch {
+                        SupabaseService.acceptInvite(game)
+                }
         }
 
 }

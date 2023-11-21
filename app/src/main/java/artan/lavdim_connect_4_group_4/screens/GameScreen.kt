@@ -150,7 +150,7 @@ fun GameScreen(navController: NavController) {
                 verticalArrangement = Center,
                 horizontalAlignment = CenterHorizontally,
 
-            ) {
+                ) {
                 Text(
                     text = "Arctan's turn",
                     color = Color(0xFFD9D9D9),
@@ -163,7 +163,7 @@ fun GameScreen(navController: NavController) {
                 )
                 Column(
                     modifier = Modifier
-                    ) {
+                ) {
                     Image(
                         painter = painterResource(id = R.drawable.board),
                         contentDescription = "Board",

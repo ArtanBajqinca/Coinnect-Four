@@ -89,7 +89,7 @@ fun StartScreen(navController: NavController, viewModel: SharedViewModel) {
                     fontFamily = AvenirRoundedFontFamily,
                     fontSize = 24.sp,
 
-                ),
+                    ),
                 colors = TextFieldDefaults.textFieldColors(
                     containerColor = Color.Transparent,
                     cursorColor = Color.White,
