@@ -10,11 +10,18 @@ import io.garrit.android.multiplayer.Player
 
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import io.garrit.android.multiplayer.SupabaseService
+import kotlinx.coroutines.launch
 
 class SharedViewModel : ViewModel() {
-    companion object {
-        var currentPlayerName: String by mutableStateOf("")
-    }
+        var users = SupabaseService.users
+
+        fun joinLobby(player: Player){
+                viewModelScope.launch {
+                        SupabaseService.joinLobby(player)
+                }
+        }
 }
 

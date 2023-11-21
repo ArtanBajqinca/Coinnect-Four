@@ -41,10 +41,12 @@ import androidx.navigation.NavController
 import artan.lavdim_connect_4_group_4.R
 import artan.lavdim_connect_4_group_4.viewModels.SharedViewModel
 import io.garrit.android.multiplayer.Player
+import io.garrit.android.multiplayer.SupabaseService
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun StartScreen(navController: NavController) {
+fun StartScreen(navController: NavController, viewModel: SharedViewModel) {
+
     var username by remember { mutableStateOf("") }
 
     Column(
@@ -105,7 +107,7 @@ fun StartScreen(navController: NavController) {
 
         Button(
             onClick = {
-                SharedViewModel.currentPlayerName = username
+                viewModel.joinLobby(Player(name = username))
                 navController.navigate(Screen.LobbyScreen.route)
             },
             shape = RoundedCornerShape(12.dp),
