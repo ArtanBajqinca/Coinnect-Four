@@ -19,7 +19,6 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = Color(0xFF282828)
                 ) {
-                    val viewModel: SharedViewModel = viewModel()
                     Navigation()
                 }
         }

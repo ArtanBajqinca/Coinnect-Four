@@ -34,11 +34,10 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import artan.lavdim_connect_4_group_4.R
-import artan.lavdim_connect_4_group_4.viewModels.ViewModel
+import artan.lavdim_connect_4_group_4.viewModels.SharedViewModel
 
 @Composable
 fun LobbyScreen(navController: NavController) {
-    val player = ViewModel.currentPlayer
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -84,7 +83,7 @@ fun LobbyScreen(navController: NavController) {
                     .padding(start = 20.dp, top = 20.dp)
             ) {
                 Text(
-                    text = player.name,
+                    text = SharedViewModel.currentPlayerName,
                     color = Color(0xFFD9D9D9),
                     fontWeight = FontWeight.Bold,
                     fontFamily = AvenirRoundedFontFamily,

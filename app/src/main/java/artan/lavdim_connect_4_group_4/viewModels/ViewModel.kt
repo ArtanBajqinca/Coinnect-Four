@@ -13,13 +13,8 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 class SharedViewModel : ViewModel() {
-    var currentPlayer: Player? by mutableStateOf(null)
-}
-
-class ViewModel {
-    var currentPlayer: Player? by mutableStateOf(null)
-
     companion object {
-        lateinit var currentPlayer: Player
+        var currentPlayerName: String by mutableStateOf("")
     }
 }
+

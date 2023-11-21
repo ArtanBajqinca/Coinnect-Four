@@ -21,8 +21,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -37,13 +39,13 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import artan.lavdim_connect_4_group_4.R
-import artan.lavdim_connect_4_group_4.viewModels.ViewModel
+import artan.lavdim_connect_4_group_4.viewModels.SharedViewModel
 import io.garrit.android.multiplayer.Player
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StartScreen(navController: NavController) {
-    val username = remember { mutableStateOf("") }
+    var username by remember { mutableStateOf("") }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -75,8 +77,8 @@ fun StartScreen(navController: NavController) {
                 .border(width = 3.dp, color = Color(0xFFBAA153), shape = RoundedCornerShape(15.dp))
         ) {
             TextField(
-                value = username.value,
-                onValueChange = { username.value = it },
+                value = username,
+                onValueChange = { username = it },
                 singleLine = true,
                 textStyle = TextStyle(
                     textAlign = TextAlign.Center,
@@ -103,8 +105,7 @@ fun StartScreen(navController: NavController) {
 
         Button(
             onClick = {
-                val currentPlayer = Player(name = username.value)
-                ViewModel.currentPlayer = currentPlayer
+                SharedViewModel.currentPlayerName = username
                 navController.navigate(Screen.LobbyScreen.route)
             },
             shape = RoundedCornerShape(12.dp),
