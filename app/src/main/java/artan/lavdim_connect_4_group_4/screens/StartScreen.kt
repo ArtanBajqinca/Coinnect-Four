@@ -2,7 +2,6 @@
 
 package artan.lavdim_connect_4_group_4.screens
 
-import android.os.Bundle
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -30,18 +29,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import artan.lavdim_connect_4_group_4.R
 import artan.lavdim_connect_4_group_4.viewModels.SharedViewModel
 import io.garrit.android.multiplayer.Player
-import io.garrit.android.multiplayer.SupabaseService
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -66,10 +62,7 @@ fun StartScreen(navController: NavController, viewModel: SharedViewModel) {
 
         Text(
             text = "Enter your username",
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
-            fontFamily = AvenirRoundedFontFamily,
-            color = Color(0xFFD9D9D9)
+            style = AvenirTypography.titleMedium
         )
 
         Spacer(modifier = Modifier.height(27.dp))
@@ -82,14 +75,7 @@ fun StartScreen(navController: NavController, viewModel: SharedViewModel) {
                 value = username,
                 onValueChange = { username = it },
                 singleLine = true,
-                textStyle = TextStyle(
-                    textAlign = TextAlign.Center,
-                    color = Color(0xFFD9D9D9),
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = AvenirRoundedFontFamily,
-                    fontSize = 24.sp,
-
-                ),
+                textStyle = AvenirTypography.titleMedium.copy(textAlign = TextAlign.Center),
                 colors = TextFieldDefaults.textFieldColors(
                     containerColor = Color.Transparent,
                     cursorColor = Color.White,

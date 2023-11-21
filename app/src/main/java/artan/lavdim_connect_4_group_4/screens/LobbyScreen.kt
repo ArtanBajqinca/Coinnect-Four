@@ -34,52 +34,58 @@ fun LobbyScreen(navController: NavController, viewModel: SharedViewModel) {
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxWidth()
     ) {
+
         Spacer(modifier = Modifier.height(50.dp))
+
         Image(
             painter = painterResource(id = R.drawable.coinnectfour),
             contentDescription = "Logo",
             modifier = Modifier.width(100.dp)
         )
+
         Spacer(modifier = Modifier.height(30.dp))
+
         Text(
             text = "LOBBY",
-            color = Color(0xFFD9D9D9),
-            fontWeight = FontWeight.Bold,
-            fontFamily = AvenirRoundedFontFamily,
-            fontSize = 40.sp,
+            style = AvenirTypography.displayLarge,
             textAlign = TextAlign.Center,
             modifier = Modifier
         )
+
         Spacer(modifier = Modifier.height(25.dp))
+
         Text(
             text = "Online players",
-            color = Color(0xFFD9D9D9),
-            fontWeight = FontWeight.Bold,
-            fontFamily = AvenirRoundedFontFamily,
-            fontSize = 20.sp,
+            style = AvenirTypography.titleMedium,
             textAlign = TextAlign.Center,
             modifier = Modifier
         )
+
         Spacer(modifier = Modifier.height(15.dp))
+
         LazyColumn(
             modifier = Modifier
                 .width(320.dp)
                 .height(200.dp)
-                .border(width = 4.dp, color = Color(0xFFBAA153), shape = RoundedCornerShape(15.dp))
-        ){
-            items(viewModel.users){ player ->
+                .border(
+                    width = 4.dp,
+                    color = Color(0xFFBAA153),
+                    shape = RoundedCornerShape(15.dp)
+                )
+        ) {
+            items(viewModel.users) { player ->
                 userCard(player = player, viewModel)
             }
         }
+
         Spacer(modifier = Modifier.height(20.dp))
+
         Text(
             text = "Incoming challenges",
-            color = Color(0xFFD9D9D9),
-            fontWeight = FontWeight.Bold,
-            fontFamily = AvenirRoundedFontFamily,
-            fontSize = 20.sp,
+            style = AvenirTypography.titleMedium,
             textAlign = TextAlign.Center,
         )
+
         Spacer(modifier = Modifier.height(20.dp))
 
         LazyColumn(
@@ -87,25 +93,29 @@ fun LobbyScreen(navController: NavController, viewModel: SharedViewModel) {
             modifier = Modifier
                 .width(320.dp)
                 .height(300.dp)
-                .border(width = 4.dp, color = Color(0xFFBAA153), shape = RoundedCornerShape(15.dp))
-        ){
-            items(viewModel.opponents){ player ->
-                challangeCard(player = player, viewModel)
+                .border(
+                    width = 4.dp,
+                    color = Color(0xFFBAA153),
+                    shape = RoundedCornerShape(15.dp)
+                )
+        ) {
+            items(viewModel.opponents) { player ->
+                challengeCard(player = player, viewModel)
             }
         }
-
     }
 }
 
 @Composable
 fun userCard(player: Player, viewModel: SharedViewModel) {
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = 20.dp, top = 20.dp)
     ) {
         Text(
-            text = player.name ,
+            text = player.name,
             color = Color(0xFFD9D9D9),
             fontWeight = FontWeight.Bold,
             fontFamily = AvenirRoundedFontFamily,
@@ -115,7 +125,7 @@ fun userCard(player: Player, viewModel: SharedViewModel) {
                 .padding(end = 10.dp)
         )
         Icon(
-            painter = painterResource(id =  R.drawable.signal_solid),
+            painter = painterResource(id = R.drawable.signal_solid),
             contentDescription = "Online Status",
             tint = Color(0xFF42A54A),
             modifier = Modifier
@@ -138,9 +148,7 @@ fun userCard(player: Player, viewModel: SharedViewModel) {
             Text(
                 "Challenge",
                 color = Color(0xFF282828),
-                fontWeight = FontWeight.Bold,
-                fontFamily = AvenirRoundedFontFamily,
-                fontSize = 12.sp,
+                style = AvenirTypography.titleSmall,
                 textAlign = TextAlign.Center
             )
         }
@@ -148,39 +156,45 @@ fun userCard(player: Player, viewModel: SharedViewModel) {
 }
 
 @Composable
-fun challangeCard(player: Game, viewModel: SharedViewModel) {
+fun challengeCard(player: Game, viewModel: SharedViewModel) {
 
-    Column(){
+    Column() {
         Text(
             text = buildAnnotatedString {
-                withStyle(style = SpanStyle(
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = AvenirRoundedFontFamily,
-                    color = Color(0xFFD9D9D9))) {
+                withStyle(
+                    style = SpanStyle(
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = AvenirRoundedFontFamily,
+                        color = Color(0xFFD9D9D9)
+                    )
+                ) {
                     append(player.player1.name)
                 }
                 append("\n") // Line break
-                withStyle(style = SpanStyle(
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = AvenirRoundedFontFamily,
-                    color = Color(0xFFD9D9D9))) {
+                withStyle(
+                    style = SpanStyle(
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = AvenirRoundedFontFamily,
+                        color = Color(0xFFD9D9D9)
+                    )
+                ) {
                     append("challenges you!")
                 }
             },
-            modifier = Modifier
-                .padding(start = 20.dp, top = 20.dp)
+            modifier = Modifier.padding(start = 20.dp, top = 20.dp)
         )
+
         Spacer(modifier = Modifier.height(10.dp))
+
         Row(
             horizontalArrangement = Arrangement.spacedBy(10.dp),
-            modifier = Modifier
-                .padding(start = 20.dp)
+            modifier = Modifier.padding(start = 20.dp)
         ) {
             Button(
                 onClick = {
-//                    navController.navigate(Screen.GameScreen.route)
+                    // navController.navigate(Screen.GameScreen.route)
                 },
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(
@@ -193,10 +207,7 @@ fun challangeCard(player: Game, viewModel: SharedViewModel) {
             ) {
                 Text(
                     "Accept",
-                    color = Color(0xFFD9D9D9),
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = AvenirRoundedFontFamily,
-                    fontSize = 12.sp,
+                    style = AvenirTypography.titleSmall,
                     textAlign = TextAlign.Center
                 )
             }
@@ -216,14 +227,10 @@ fun challangeCard(player: Game, viewModel: SharedViewModel) {
             ) {
                 Text(
                     "Decline",
-                    color = Color(0xFFD9D9D9),
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = AvenirRoundedFontFamily,
-                    fontSize = 12.sp,
+                    style = AvenirTypography.titleSmall,
                     textAlign = TextAlign.Center
                 )
             }
         }
     }
-
 }
