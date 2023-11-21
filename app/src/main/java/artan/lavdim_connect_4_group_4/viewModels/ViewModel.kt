@@ -18,6 +18,7 @@ import kotlinx.coroutines.launch
 
 class SharedViewModel : ViewModel() {
         var users = SupabaseService.users
+        var opponents = SupabaseService.games
 
         fun joinLobby(player: Player){
                 viewModelScope.launch {

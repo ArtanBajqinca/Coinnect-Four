@@ -1,6 +1,5 @@
 package artan.lavdim_connect_4_group_4.screens
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -12,7 +11,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,13 +22,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import artan.lavdim_connect_4_group_4.R
 import artan.lavdim_connect_4_group_4.viewModels.SharedViewModel
 import io.garrit.android.multiplayer.Game
 import io.garrit.android.multiplayer.Player
-import io.garrit.android.multiplayer.SupabaseService
 
 @Composable
 fun LobbyScreen(navController: NavController, viewModel: SharedViewModel) {
@@ -90,9 +86,12 @@ fun LobbyScreen(navController: NavController, viewModel: SharedViewModel) {
             verticalArrangement = Arrangement.spacedBy(10.dp),
             modifier = Modifier
                 .width(320.dp)
-                .height(200.dp)
+                .height(300.dp)
                 .border(width = 4.dp, color = Color(0xFFBAA153), shape = RoundedCornerShape(15.dp))
         ){
+            items(viewModel.opponents){ player ->
+                challangeCard(player = player, viewModel)
+            }
         }
 
     }
@@ -149,7 +148,7 @@ fun userCard(player: Player, viewModel: SharedViewModel) {
 }
 
 @Composable
-fun challangeCard(player: Player, viewModel: SharedViewModel) {
+fun challangeCard(player: Game, viewModel: SharedViewModel) {
 
     Column(){
         Text(
@@ -159,7 +158,7 @@ fun challangeCard(player: Player, viewModel: SharedViewModel) {
                     fontWeight = FontWeight.Bold,
                     fontFamily = AvenirRoundedFontFamily,
                     color = Color(0xFFD9D9D9))) {
-                    append("LavdimNation ")
+                    append(player.player1.name)
                 }
                 append("\n") // Line break
                 withStyle(style = SpanStyle(
@@ -173,6 +172,7 @@ fun challangeCard(player: Player, viewModel: SharedViewModel) {
             modifier = Modifier
                 .padding(start = 20.dp, top = 20.dp)
         )
+        Spacer(modifier = Modifier.height(10.dp))
         Row(
             horizontalArrangement = Arrangement.spacedBy(10.dp),
             modifier = Modifier
