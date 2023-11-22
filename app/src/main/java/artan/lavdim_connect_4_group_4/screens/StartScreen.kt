@@ -66,10 +66,7 @@ fun StartScreen(navController: NavController, viewModel: SharedViewModel) {
 
         Text(
             text = "Enter your username",
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
-            fontFamily = AvenirRoundedFontFamily,
-            color = Color(0xFFD9D9D9)
+            style = AvenirTypography.titleMedium
         )
 
         Spacer(modifier = Modifier.height(27.dp))
@@ -88,7 +85,6 @@ fun StartScreen(navController: NavController, viewModel: SharedViewModel) {
                     fontWeight = FontWeight.Bold,
                     fontFamily = AvenirRoundedFontFamily,
                     fontSize = 24.sp,
-
                     ),
                 colors = TextFieldDefaults.textFieldColors(
                     containerColor = Color.Transparent,
@@ -118,9 +114,7 @@ fun StartScreen(navController: NavController, viewModel: SharedViewModel) {
             Text(
                 "JOIN LOBBY",
                 color = Color(0xFF282828),
-                fontWeight = FontWeight.Bold,
-                fontFamily = AvenirRoundedFontFamily,
-                fontSize = 24.sp,
+                style = AvenirTypography.titleMedium
             )
         }
 
