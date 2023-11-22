@@ -100,10 +100,7 @@ fun userCard(player: Player, viewModel: SharedViewModel) {
     ) {
         Text(
             text = player.name,
-            color = Color(0xFFD9D9D9),
-            fontWeight = FontWeight.Bold,
-            fontFamily = AvenirRoundedFontFamily,
-            fontSize = 20.sp,
+            style = AvenirTypography.displayMedium,
             modifier = Modifier
                 .width(150.dp)
                 .padding(end = 10.dp)
@@ -132,9 +129,7 @@ fun userCard(player: Player, viewModel: SharedViewModel) {
             Text(
                 "Challenge",
                 color = Color(0xFF282828),
-                fontWeight = FontWeight.Bold,
-                fontFamily = AvenirRoundedFontFamily,
-                fontSize = 12.sp,
+                style = AvenirTypography.titleSmall,
                 textAlign = TextAlign.Center
             )
         }
@@ -194,10 +189,7 @@ fun challangeCard(navController: NavController,player: Game, viewModel: SharedVi
             ) {
                 Text(
                     text = "Accept",
-                    color = Color(0xFFD9D9D9),
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = AvenirRoundedFontFamily,
-                    fontSize = 12.sp,
+                    style = AvenirTypography.titleSmall,
                     textAlign = TextAlign.Center
                 )
             }
@@ -217,10 +209,7 @@ fun challangeCard(navController: NavController,player: Game, viewModel: SharedVi
             ) {
                 Text(
                     text = "Decline",
-                    color = Color(0xFFD9D9D9),
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = AvenirRoundedFontFamily,
-                    fontSize = 12.sp,
+                    style = AvenirTypography.titleSmall,
                     textAlign = TextAlign.Center
                 )
             }
