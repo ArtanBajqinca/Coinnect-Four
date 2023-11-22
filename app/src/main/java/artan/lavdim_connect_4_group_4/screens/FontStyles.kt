@@ -33,6 +33,12 @@ val AvenirTypography = Typography(
         fontSize = 30.sp,
         color = Color(0xFFD9D9D9)
     ),
+    displayMedium = TextStyle(
+        fontFamily = AvenirRoundedFontFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 20.sp,
+        color = Color(0xFFD9D9D9)
+    ),
     displayLarge = TextStyle(
         fontFamily = AvenirRoundedFontFamily,
         fontWeight = FontWeight.Bold,

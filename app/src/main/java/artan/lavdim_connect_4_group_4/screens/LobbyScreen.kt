@@ -46,20 +46,14 @@ fun LobbyScreen(navController: NavController, viewModel: SharedViewModel) {
         Spacer(modifier = Modifier.height(30.dp))
         Text(
             text = "LOBBY",
-            color = Color(0xFFD9D9D9),
-            fontWeight = FontWeight.Bold,
-            fontFamily = AvenirRoundedFontFamily,
-            fontSize = 40.sp,
+            style = AvenirTypography.displayLarge,
             textAlign = TextAlign.Center,
             modifier = Modifier
         )
         Spacer(modifier = Modifier.height(25.dp))
         Text(
             text = "Online players",
-            color = Color(0xFFD9D9D9),
-            fontWeight = FontWeight.Bold,
-            fontFamily = AvenirRoundedFontFamily,
-            fontSize = 20.sp,
+            style = AvenirTypography.displayMedium,
             textAlign = TextAlign.Center,
             modifier = Modifier
         )
@@ -77,10 +71,7 @@ fun LobbyScreen(navController: NavController, viewModel: SharedViewModel) {
         Spacer(modifier = Modifier.height(20.dp))
         Text(
             text = "Incoming challenges",
-            color = Color(0xFFD9D9D9),
-            fontWeight = FontWeight.Bold,
-            fontFamily = AvenirRoundedFontFamily,
-            fontSize = 20.sp,
+            style = AvenirTypography.displayMedium,
             textAlign = TextAlign.Center,
         )
         Spacer(modifier = Modifier.height(20.dp))
