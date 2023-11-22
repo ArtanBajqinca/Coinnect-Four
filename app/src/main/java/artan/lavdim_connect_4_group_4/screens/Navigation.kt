@@ -9,6 +9,7 @@ import androidx.navigation.compose.rememberNavController
 import artan.lavdim_connect_4_group_4.viewModels.SharedViewModel
 import io.garrit.android.multiplayer.ServerState
 import io.garrit.android.multiplayer.SupabaseService
+import io.garrit.android.multiplayer.SupabaseService.player
 
 @Composable
 fun Navigation() {
@@ -47,9 +48,14 @@ fun Navigation() {
             )
         }
         composable(route = Screen.GameScreen.route) {
-            GameScreen(
-                navController = navController,
-            )
+            val currentGame = SupabaseService.currentGame
+            if (currentGame != null) {
+                GameScreen(
+                    navController = navController,
+                    player = currentGame,
+                    viewModel = sharedViewModel,
+                )
+            }
         }
         composable(route = Screen.ResultScreen.route) {
             ResultScreen(

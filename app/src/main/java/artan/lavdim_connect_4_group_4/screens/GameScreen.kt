@@ -4,7 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Arrangement.Center
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,7 +19,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -28,9 +26,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import artan.lavdim_connect_4_group_4.R
+import artan.lavdim_connect_4_group_4.viewModels.SharedViewModel
+import io.garrit.android.multiplayer.Game
+import io.garrit.android.multiplayer.Player
 
 @Composable
-fun GameScreen(navController: NavController) {
+fun GameScreen(navController: NavController, player: Game, viewModel: SharedViewModel) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -71,7 +72,7 @@ fun GameScreen(navController: NavController) {
                             )
                     ) {
                         Text(
-                            "Arctan",
+                            text = player.player2.name,
                             color = Color(0xFFD9D9D9),
                             fontWeight = FontWeight.Bold,
                             fontFamily = AvenirRoundedFontFamily,
@@ -121,7 +122,7 @@ fun GameScreen(navController: NavController) {
                             )
                     ) {
                         Text(
-                            "LavdimNation",
+                            text = player.player1.name,
                             color = Color(0xFFD9D9D9),
                             fontWeight = FontWeight.Bold,
                             fontFamily = AvenirRoundedFontFamily,
@@ -152,7 +153,7 @@ fun GameScreen(navController: NavController) {
 
                 ) {
                 Text(
-                    text = "Arctan's turn",
+                    text = "${player.player2.name}'s turn",
                     color = Color(0xFFD9D9D9),
                     fontWeight = FontWeight.Bold,
                     fontFamily = AvenirRoundedFontFamily,
