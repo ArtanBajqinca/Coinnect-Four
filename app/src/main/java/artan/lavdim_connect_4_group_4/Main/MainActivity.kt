@@ -1,4 +1,4 @@
-package artan.lavdim_connect_4_group_4
+package artan.lavdim_connect_4_group_4.Main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -7,9 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.lifecycle.viewmodel.compose.viewModel
-import artan.lavdim_connect_4_group_4.screens.Navigation
-import artan.lavdim_connect_4_group_4.viewModels.SharedViewModel
+import artan.lavdim_connect_4_group_4.Navigation.Navigation
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,4 +1,4 @@
-package artan.lavdim_connect_4_group_4.screens
+package artan.lavdim_connect_4_group_4.Font
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.graphics.Color

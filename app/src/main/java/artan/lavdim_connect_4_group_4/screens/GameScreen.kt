@@ -25,10 +25,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import artan.lavdim_connect_4_group_4.Font.AvenirRoundedFontFamily
 import artan.lavdim_connect_4_group_4.R
 import artan.lavdim_connect_4_group_4.viewModels.SharedViewModel
-import io.garrit.android.multiplayer.Game
-import io.garrit.android.multiplayer.Player
+import artan.lavdim_connect_4_group_4.multiplayer.Game
 
 @Composable
 fun GameScreen(navController: NavController, player: Game, viewModel: SharedViewModel) {
