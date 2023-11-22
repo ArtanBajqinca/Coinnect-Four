@@ -41,6 +41,27 @@ class SharedViewModel : ViewModel() {
                 }
         }
 
+        enum class CellState { EMPTY, PLAYER1, PLAYER2 }
+
+        data class Cell(var state: CellState = CellState.EMPTY)
+
+        class GameViewModel: ViewModel() {
+                private val _board = List(6) { MutableList(7) { Cell(CellState.EMPTY) } }
+                val board: List<List<Cell>> = _board
+                var currentPlayer = mutableStateOf(CellState.PLAYER1)
+
+                fun dropPiece(column: Int) {
+                        for (row in 5 downTo 0) {
+                                if (_board[row][column].state == CellState.EMPTY) {
+                                        _board[row][column].state = currentPlayer.value
+                                        currentPlayer.value = if (currentPlayer.value == CellState.PLAYER1) CellState.PLAYER2 else CellState.PLAYER1
+                                        break
+                                }
+                        }
+                }
+                // Add methods to check for win conditions...
+        }
+
 
 }
 

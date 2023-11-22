@@ -8,11 +8,16 @@ import androidx.compose.foundation.layout.Arrangement.Center
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -165,18 +170,10 @@ fun GameScreen(navController: NavController, player: Game, viewModel: SharedView
                 Column(
                     modifier = Modifier
                 ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.board),
-                        contentDescription = "Board",
-                        modifier = Modifier
-                            .width(360.dp)
-                            .height(360.dp)
-                            .align(CenterHorizontally)
-                            .padding(top = 60.dp)
-                            .clickable {
-                                navController.navigate(Screen.ResultScreen.route)
-                            }
-                    )
+
+                    Spacer(modifier = Modifier.height(30.dp))
+                    Connect4Grid(SharedViewModel.GameViewModel())
+
                 }
                 Column(
                     modifier = Modifier
@@ -189,6 +186,62 @@ fun GameScreen(navController: NavController, player: Game, viewModel: SharedView
                             .width(100.dp)
                     )
                 }
+            }
+        }
+    }
+}
+
+@Composable
+fun Connect4Grid(viewModel: SharedViewModel.GameViewModel) {
+    Box {
+        // Grid of clickable cells
+        Column {
+            for (row in viewModel.board) {
+                Row {
+                    for (cell in row) {
+                        CellView(cell, onClick = {
+                            val columnIndex = row.indexOf(cell)
+                            viewModel.dropPiece(columnIndex)
+                        })
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun CellView(cell: SharedViewModel.Cell, onClick: () -> Unit) {
+    val cellSize = 50.dp  // Adjust this value as needed to fit your screen layout
+
+    Box(
+        modifier = Modifier
+            .size(cellSize)
+            .padding(6.dp)
+            .clickable(onClick = onClick),
+        contentAlignment = Alignment.Center
+    ) {
+        when (cell.state) {
+            SharedViewModel.CellState.EMPTY -> {
+                // For empty cells, you might want to show a gray circle or keep it empty
+                Box(modifier = Modifier
+                    .size(cellSize)
+                    .background(Color.Gray, CircleShape))
+//                (Color(0xFF282828)
+            }
+            SharedViewModel.CellState.PLAYER1 -> {
+                Image(
+                    painter = painterResource(id = R.drawable.gold_coin),
+                    contentDescription = "Gold Coin",
+                    modifier = Modifier.size(cellSize)
+                )
+            }
+            SharedViewModel.CellState.PLAYER2 -> {
+                Image(
+                    painter = painterResource(id = R.drawable.silver_coin),
+                    contentDescription = "Silver Coin",
+                    modifier = Modifier.size(cellSize)
+                )
             }
         }
     }
