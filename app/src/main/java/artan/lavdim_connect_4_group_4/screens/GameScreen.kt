@@ -77,7 +77,7 @@ fun GameScreen(navController: NavController, player: Game, viewModel: SharedView
                             )
                     ) {
                         Text(
-                            text = player.player2.name,
+                            text = player.player1.name,
                             color = Color(0xFFD9D9D9),
                             fontWeight = FontWeight.Bold,
                             fontFamily = AvenirRoundedFontFamily,
@@ -127,7 +127,7 @@ fun GameScreen(navController: NavController, player: Game, viewModel: SharedView
                             )
                     ) {
                         Text(
-                            text = player.player1.name,
+                            text = player.player2.name,
                             color = Color(0xFFD9D9D9),
                             fontWeight = FontWeight.Bold,
                             fontFamily = AvenirRoundedFontFamily,
@@ -158,7 +158,7 @@ fun GameScreen(navController: NavController, player: Game, viewModel: SharedView
 
                 ) {
                 Text(
-                    text = "${player.player2.name}'s turn",
+                    text = "${player.player1.name}'s turn",
                     color = Color(0xFFD9D9D9),
                     fontWeight = FontWeight.Bold,
                     fontFamily = AvenirRoundedFontFamily,
