@@ -28,6 +28,7 @@ import artan.lavdim_connect_4_group_4.viewModels.SharedViewModel
 import io.garrit.android.multiplayer.Game
 import io.garrit.android.multiplayer.GameEvent
 import io.garrit.android.multiplayer.Player
+import io.garrit.android.multiplayer.ServerState
 import io.garrit.android.multiplayer.SupabaseService
 
 @Composable
@@ -92,7 +93,7 @@ fun LobbyScreen(navController: NavController, viewModel: SharedViewModel) {
                 .border(width = 4.dp, color = Color(0xFFBAA153), shape = RoundedCornerShape(15.dp))
         ) {
             items(SupabaseService.games) { player ->
-                challangeCard(player = player, viewModel)
+                challangeCard(navController,player, viewModel)
             }
         }
 
@@ -150,7 +151,7 @@ fun userCard(player: Player, viewModel: SharedViewModel) {
 }
 
 @Composable
-fun challangeCard(player: Game, viewModel: SharedViewModel) {
+fun challangeCard(navController: NavController,player: Game, viewModel: SharedViewModel) {
 
     Column() {
         Text(
@@ -189,6 +190,7 @@ fun challangeCard(player: Game, viewModel: SharedViewModel) {
             Button(
                 onClick = {
                     viewModel.acceptInvite(player)
+                    navController.navigate(Screen.GameScreen.route)
                 },
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(
