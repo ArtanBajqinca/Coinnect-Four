@@ -46,7 +46,6 @@ import io.garrit.android.multiplayer.SupabaseService
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StartScreen(navController: NavController, viewModel: SharedViewModel) {
-
     var username by remember { mutableStateOf("") }
 
     Column(
@@ -54,21 +53,19 @@ fun StartScreen(navController: NavController, viewModel: SharedViewModel) {
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp) // Add padding to the entire column if needed
+            .padding(16.dp)
     ) {
         Image(
             painter = painterResource(id = R.drawable.coinnectfour),
             contentDescription = "Logo",
             modifier = Modifier.graphicsLayer(scaleX = 0.7f, scaleY = 0.7f)
         )
-
         Spacer(modifier = Modifier.height(50.dp))
 
         Text(
             text = "Enter your username",
             style = AvenirTypography.titleMedium
         )
-
         Spacer(modifier = Modifier.height(27.dp))
 
         Box(
@@ -98,7 +95,6 @@ fun StartScreen(navController: NavController, viewModel: SharedViewModel) {
                 ),
             )
         }
-
         Spacer(modifier = Modifier.height(27.dp))
 
         Button(
@@ -117,8 +113,6 @@ fun StartScreen(navController: NavController, viewModel: SharedViewModel) {
                 style = AvenirTypography.titleMedium
             )
         }
-
         Spacer(modifier = Modifier.height(50.dp))
-
     }
 }

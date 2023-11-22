@@ -38,12 +38,14 @@ fun LobbyScreen(navController: NavController, viewModel: SharedViewModel) {
         modifier = Modifier.fillMaxWidth()
     ) {
         Spacer(modifier = Modifier.height(50.dp))
+
         Image(
             painter = painterResource(id = R.drawable.coinnectfour),
             contentDescription = "Logo",
             modifier = Modifier.width(100.dp)
         )
         Spacer(modifier = Modifier.height(30.dp))
+
         Text(
             text = "LOBBY",
             style = AvenirTypography.displayLarge,
@@ -51,6 +53,7 @@ fun LobbyScreen(navController: NavController, viewModel: SharedViewModel) {
             modifier = Modifier
         )
         Spacer(modifier = Modifier.height(25.dp))
+
         Text(
             text = "Online players",
             style = AvenirTypography.displayMedium,
@@ -58,6 +61,7 @@ fun LobbyScreen(navController: NavController, viewModel: SharedViewModel) {
             modifier = Modifier
         )
         Spacer(modifier = Modifier.height(15.dp))
+
         LazyColumn(
             modifier = Modifier
                 .width(320.dp)
@@ -69,6 +73,7 @@ fun LobbyScreen(navController: NavController, viewModel: SharedViewModel) {
             }
         }
         Spacer(modifier = Modifier.height(20.dp))
+
         Text(
             text = "Incoming challenges",
             style = AvenirTypography.displayMedium,
@@ -87,7 +92,6 @@ fun LobbyScreen(navController: NavController, viewModel: SharedViewModel) {
                 challangeCard(navController,player, viewModel)
             }
         }
-
     }
 }
 
@@ -168,6 +172,7 @@ fun challangeCard(navController: NavController,player: Game, viewModel: SharedVi
                 .padding(start = 20.dp, top = 20.dp)
         )
         Spacer(modifier = Modifier.height(10.dp))
+
         Row(
             horizontalArrangement = Arrangement.spacedBy(10.dp),
             modifier = Modifier

@@ -189,9 +189,7 @@ fun GameScreen(navController: NavController, player: Game, viewModel: SharedView
                             .width(100.dp)
                     )
                 }
-
             }
-
         }
     }
 }

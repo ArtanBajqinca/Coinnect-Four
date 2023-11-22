@@ -20,8 +20,6 @@ import kotlinx.coroutines.launch
 
 class SharedViewModel : ViewModel() {
 
-
-
         fun joinLobby(player: Player){
                 viewModelScope.launch {
                         SupabaseService.joinLobby(player)
