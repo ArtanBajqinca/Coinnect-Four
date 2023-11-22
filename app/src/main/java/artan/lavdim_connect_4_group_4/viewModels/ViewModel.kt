@@ -1,5 +1,6 @@
 package artan.lavdim_connect_4_group_4.viewModels
 
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
@@ -13,10 +14,13 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import io.garrit.android.multiplayer.Game
+import io.garrit.android.multiplayer.ServerState
 import io.garrit.android.multiplayer.SupabaseService
 import kotlinx.coroutines.launch
 
 class SharedViewModel : ViewModel() {
+
+
 
         fun joinLobby(player: Player){
                 viewModelScope.launch {
@@ -38,5 +42,7 @@ class SharedViewModel : ViewModel() {
                         SupabaseService.acceptInvite(game)
                 }
         }
+
+
 }
 
