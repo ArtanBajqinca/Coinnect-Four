@@ -23,7 +23,6 @@ class SharedViewModel : ViewModel() {
                         SupabaseService.joinLobby(player)
                 }
         }
-
         fun invite(player: Player){
                 viewModelScope.launch {
                         SupabaseService.invite(player)
@@ -34,12 +33,10 @@ class SharedViewModel : ViewModel() {
                         SupabaseService.declineInvite(game)
                 }
         }
-
         fun acceptInvite(game: Game){
                 viewModelScope.launch {
                         SupabaseService.acceptInvite(game)
                 }
         }
-
 }
 
