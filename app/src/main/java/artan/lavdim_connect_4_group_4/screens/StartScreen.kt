@@ -2,7 +2,6 @@
 
 package artan.lavdim_connect_4_group_4.screens
 
-import android.os.Bundle
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -36,12 +35,12 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import artan.lavdim_connect_4_group_4.Font.AvenirRoundedFontFamily
+import artan.lavdim_connect_4_group_4.Font.AvenirTypography
 import artan.lavdim_connect_4_group_4.R
 import artan.lavdim_connect_4_group_4.viewModels.SharedViewModel
-import io.garrit.android.multiplayer.Player
-import io.garrit.android.multiplayer.SupabaseService
+import artan.lavdim_connect_4_group_4.multiplayer.Player
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

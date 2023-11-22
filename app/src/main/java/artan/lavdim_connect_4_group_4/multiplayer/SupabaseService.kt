@@ -1,4 +1,4 @@
-package io.garrit.android.multiplayer
+package artan.lavdim_connect_4_group_4.multiplayer
 
 import android.os.Parcelable
 import androidx.compose.runtime.mutableStateListOf
