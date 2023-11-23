@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
@@ -24,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -193,7 +195,12 @@ fun GameScreen(navController: NavController, player: Game, viewModel: SharedView
 
 @Composable
 fun Connect4Grid(viewModel: SharedViewModel.GameViewModel) {
-    Box {
+    Column (
+        modifier = Modifier
+            .background(Color(0xFF383838), shape = RoundedCornerShape(40.dp))
+            .padding(16.dp)
+        )
+    {
         // Grid of clickable cells
         Column {
             for (row in viewModel.board) {
@@ -209,6 +216,8 @@ fun Connect4Grid(viewModel: SharedViewModel.GameViewModel) {
         }
     }
 }
+
+
 
 @Composable
 fun CellView(cell: SharedViewModel.Cell, onClick: () -> Unit) {
@@ -226,8 +235,7 @@ fun CellView(cell: SharedViewModel.Cell, onClick: () -> Unit) {
                 // For empty cells, you might want to show a gray circle or keep it empty
                 Box(modifier = Modifier
                     .size(cellSize)
-                    .background(Color.Gray, CircleShape))
-//                (Color(0xFF282828)
+                    .background(Color(0xFF282828), CircleShape))
             }
             SharedViewModel.CellState.PLAYER1 -> {
                 Image(
