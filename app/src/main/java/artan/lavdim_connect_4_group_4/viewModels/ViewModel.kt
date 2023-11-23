@@ -53,24 +53,32 @@ class SharedViewModel : ViewModel() {
                 private val _board = List(6) { mutableStateListOf<Cell>().apply { addAll(List(7) { Cell(CellState.EMPTY) }) } }
                 val board: List<MutableList<Cell>> = _board
                 var currentPlayer = mutableStateOf(CellState.PLAYER1)
+                var isMyTurn = mutableStateOf(true) // Indicates if it's the local player's turn
 
                 init {
                     SupabaseService.callbackHandler = this
                 }
 
                 fun dropPiece(column: Int) {
-                        for (row in 5 downTo 0) {
-                                if (_board[row][column].state == CellState.EMPTY) {
-                                        _board[row][column] = Cell(currentPlayer.value)
-                                        currentPlayer.value = if (currentPlayer.value == CellState.PLAYER1) CellState.PLAYER2 else CellState.PLAYER1
 
-                                        // Broadcast the move
-                                        viewModelScope.launch {
-                                                SupabaseService.sendTurn(column)
+                                for (row in 5 downTo 0) {
+                                        if (_board[row][column].state == CellState.EMPTY) {
+                                                _board[row][column] = Cell(currentPlayer.value)
+                                                currentPlayer.value = if (currentPlayer.value == CellState.PLAYER1) CellState.PLAYER2 else CellState.PLAYER1
+
+                                                if (isMyTurn.value){
+                                                        // Broadcast the move and change turn
+                                                        viewModelScope.launch {
+                                                                SupabaseService.sendTurn(column)
+                                                                SupabaseService.releaseTurn()
+                                                        }
+                                                        isMyTurn.value = false // It's now the remote player's turn
+                                                }
+
+                                                break
                                         }
-                                        break
                                 }
-                        }
+
                 }
 
                 override suspend fun playerReadyHandler() {
@@ -78,22 +86,36 @@ class SharedViewModel : ViewModel() {
                 }
 
                 override suspend fun releaseTurnHandler() {
-                        TODO("Not yet implemented")
+                        isMyTurn.value = true
                 }
 
-                override suspend fun actionHandler(x: Int, y: Int) {
-                        dropPiece(x)
+                override suspend fun actionHandler(x: Int,y: Int) {
+                        updateBoardFromRemote(x)
                 }
+
+                private fun updateBoardFromRemote(column: Int) {
+                        dropPiece(column)
+//                        if (_board[row][column].state == CellState.EMPTY) {
+//                                val remotePlayerState = if (currentPlayer.value == CellState.PLAYER1) CellState.PLAYER2 else CellState.PLAYER1
+//                                _board[row][column] = Cell(remotePlayerState)
+//                                dropPiece(column)
+//                        }
+                }
+
+
+
+
+
+
+
 
                 override suspend fun answerHandler(status: ActionResult) {
-                        TODO("Not yet implemented")
+                        // Do not use
                 }
 
                 override suspend fun finishHandler(status: GameResult) {
-                        TODO("Not yet implemented")
+                        // Do not use
                 }
-                // win conditions...
-
         }
 
 
