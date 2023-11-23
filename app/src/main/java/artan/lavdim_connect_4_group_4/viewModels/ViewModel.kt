@@ -13,8 +13,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import artan.lavdim_connect_4_group_4.multiplayer.ActionResult
 import artan.lavdim_connect_4_group_4.multiplayer.Game
+import artan.lavdim_connect_4_group_4.multiplayer.GameResult
 import artan.lavdim_connect_4_group_4.multiplayer.ServerState
+import artan.lavdim_connect_4_group_4.multiplayer.SupabaseCallback
 import artan.lavdim_connect_4_group_4.multiplayer.SupabaseService
 import kotlinx.coroutines.launch
 
@@ -46,10 +49,14 @@ class SharedViewModel : ViewModel() {
 
         data class Cell(var state: CellState = CellState.EMPTY)
 
-        class GameViewModel: ViewModel() {
+        class GameViewModel: ViewModel(), SupabaseCallback {
                 private val _board = List(6) { mutableStateListOf<Cell>().apply { addAll(List(7) { Cell(CellState.EMPTY) }) } }
                 val board: List<MutableList<Cell>> = _board
                 var currentPlayer = mutableStateOf(CellState.PLAYER1)
+
+                init {
+                    SupabaseService.callbackHandler = this
+                }
 
                 fun dropPiece(column: Int) {
                         for (row in 5 downTo 0) {
@@ -57,12 +64,36 @@ class SharedViewModel : ViewModel() {
                                         _board[row][column] = Cell(currentPlayer.value)
                                         currentPlayer.value = if (currentPlayer.value == CellState.PLAYER1) CellState.PLAYER2 else CellState.PLAYER1
 
-//                                        SupabaseService.sendTurn(row, column)  // Send the move to the server
+                                        // Broadcast the move
+                                        viewModelScope.launch {
+                                                SupabaseService.sendTurn(column)
+                                        }
                                         break
                                 }
                         }
                 }
+
+                override suspend fun playerReadyHandler() {
+                        TODO("Not yet implemented")
+                }
+
+                override suspend fun releaseTurnHandler() {
+                        TODO("Not yet implemented")
+                }
+
+                override suspend fun actionHandler(x: Int, y: Int) {
+                        dropPiece(x)
+                }
+
+                override suspend fun answerHandler(status: ActionResult) {
+                        TODO("Not yet implemented")
+                }
+
+                override suspend fun finishHandler(status: GameResult) {
+                        TODO("Not yet implemented")
+                }
                 // win conditions...
+
         }
 
 
