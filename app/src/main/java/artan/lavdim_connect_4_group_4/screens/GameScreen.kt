@@ -35,7 +35,7 @@ import androidx.navigation.NavController
 import artan.lavdim_connect_4_group_4.Font.AvenirRoundedFontFamily
 import artan.lavdim_connect_4_group_4.R
 import artan.lavdim_connect_4_group_4.viewModels.SharedViewModel
-import artan.lavdim_connect_4_group_4.multiplayer.Game
+import io.garrit.android.multiplayer.Game
 
 @Composable
 fun GameScreen(navController: NavController, player: Game, viewModel: SharedViewModel) {

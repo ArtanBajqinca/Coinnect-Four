@@ -1,6 +1,5 @@
-package artan.lavdim_connect_4_group_4.multiplayer
+package io.garrit.android.multiplayer
 
-import android.os.Parcelable
 import androidx.compose.runtime.mutableStateListOf
 import io.github.jan.supabase.createSupabaseClient
 import io.github.jan.supabase.realtime.PresenceAction
@@ -136,9 +135,9 @@ object SupabaseService {
             _client.realtime.connect()
         }
         if (_lobby == null) {
-            SupabaseService.player = player
+            this.player = player
             println("Create Channel")
-            val lobby = _client.realtime.createChannel("lobby-$_type")
+            val lobby = _client.realtime.createChannel("lobby-${_type}")
 
             val presenceJob = lobby.presenceChangeFlow()
                 .onEach {
@@ -193,10 +192,16 @@ object SupabaseService {
         _lobbyJobs.forEach { it.cancel() }
         _lobbyJobs.clear()
         _lobby?.untrack()
+        _lobby?.leave()
         _lobby = null
+
+        users.clear()
+        games.clear()
     }
 
-    private suspend fun joinGame(game: Game) {
+    private suspend fun joinGame(
+        game: Game
+    ) {
         currentGame = game
         println("Leave Lobby")
         leaveLobby()
