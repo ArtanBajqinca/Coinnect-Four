@@ -18,6 +18,10 @@ import io.garrit.android.multiplayer.GameResult
 import io.garrit.android.multiplayer.Player
 import io.garrit.android.multiplayer.SupabaseCallback
 import io.garrit.android.multiplayer.SupabaseService
+import io.garrit.android.multiplayer.SupabaseService.currentGame
+import io.garrit.android.multiplayer.SupabaseService.player
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class SharedViewModel : ViewModel() {
@@ -48,44 +52,53 @@ class SharedViewModel : ViewModel() {
 
         data class Cell(var state: CellState = CellState.EMPTY)
 
-        class GameViewModel: ViewModel(), SupabaseCallback {
+        class GameViewModel : ViewModel(), SupabaseCallback {
                 private val _board = List(6) { mutableStateListOf<Cell>().apply { addAll(List(7) { Cell(CellState.EMPTY) }) } }
                 val board: List<MutableList<Cell>> = _board
                 var currentPlayer = mutableStateOf(CellState.PLAYER1)
-                var isMyTurn = mutableStateOf(true) // Indicates if it's the local player's turn
+                var localPlayerTurn by mutableStateOf(true)
+                private val _currentPlayerName = MutableStateFlow(currentGame?.player1?.name ?: "")
+                val currentPlayerName: StateFlow<String> = _currentPlayerName
 
                 init {
-                    SupabaseService.callbackHandler = this
+                        SupabaseService.callbackHandler = this
                 }
 
                 fun dropPiece(column: Int) {
+                        viewModelScope.launch {
+                                if (localPlayerTurn) {
+                                        for (row in 5 downTo 0) {
+                                                if (_board[row][column].state == CellState.EMPTY) {
+                                                        _board[row][column] = Cell(currentPlayer.value)
 
-                                for (row in 5 downTo 0) {
-                                        if (_board[row][column].state == CellState.EMPTY) {
-                                                _board[row][column] = Cell(currentPlayer.value)
-                                                currentPlayer.value = if (currentPlayer.value == CellState.PLAYER1) CellState.PLAYER2 else CellState.PLAYER1
+                                                        // Toggle the current player for the next turn
+                                                        currentPlayer.value = if (currentPlayer.value == CellState.PLAYER1) CellState.PLAYER2 else CellState.PLAYER1
 
-                                                if (isMyTurn.value){
+                                                        // Update the current player's name
+                                                        _currentPlayerName.value = if (currentPlayer.value == CellState.PLAYER1) currentGame?.player1?.name ?: "" else currentGame?.player2?.name ?: ""
+
                                                         // Broadcast the move and change turn
-                                                        viewModelScope.launch {
-                                                                SupabaseService.sendTurn(column)
-                                                                SupabaseService.releaseTurn()
-                                                        }
-                                                        isMyTurn.value = false // It's now the remote player's turn
-                                                }
+                                                        SupabaseService.sendTurn(column)
+                                                        localPlayerTurn = false
 
-                                                break
+                                                        // Make sure to break the loop after placing the coin
+                                                        break
+                                                }
                                         }
                                 }
-
+                        }
                 }
+
+
+
+
 
                 override suspend fun playerReadyHandler() {
                         TODO("Not yet implemented")
                 }
 
                 override suspend fun releaseTurnHandler() {
-                        isMyTurn.value = true
+
                 }
 
                 override suspend fun actionHandler(x: Int,y: Int) {
@@ -93,13 +106,27 @@ class SharedViewModel : ViewModel() {
                 }
 
                 private fun updateBoardFromRemote(column: Int) {
-                        dropPiece(column)
-//                        if (_board[row][column].state == CellState.EMPTY) {
-//                                val remotePlayerState = if (currentPlayer.value == CellState.PLAYER1) CellState.PLAYER2 else CellState.PLAYER1
-//                                _board[row][column] = Cell(remotePlayerState)
-//                                dropPiece(column)
-//                        }
+                        viewModelScope.launch {
+                                for (row in 5 downTo 0) {
+                                        if (_board[row][column].state == CellState.EMPTY) {
+                                                _board[row][column] = Cell(currentPlayer.value)
+
+                                                // Toggle the current player for the next turn
+                                                currentPlayer.value = if (currentPlayer.value == CellState.PLAYER1) CellState.PLAYER2 else CellState.PLAYER1
+
+                                                // Broadcast the move and change turn
+                                                SupabaseService.releaseTurn()
+                                                localPlayerTurn = true
+
+                                                break
+                                        }
+                                }
+                        }
                 }
+
+
+
+
 
 
 
