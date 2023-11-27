@@ -56,9 +56,8 @@ fun Navigation() {
             val currentGame = SupabaseService.currentGame
             if (currentGame != null) {
                 GameScreen(
-                    navController = navController,
                     player = currentGame,
-                    viewModel = sharedViewModel,
+                    viewModel = SharedViewModel.GameViewModel()
                 )
             }
         }
