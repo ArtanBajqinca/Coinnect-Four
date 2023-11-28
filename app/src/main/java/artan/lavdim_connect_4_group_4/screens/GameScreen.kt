@@ -12,37 +12,33 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import artan.lavdim_connect_4_group_4.Font.AvenirRoundedFontFamily
 import artan.lavdim_connect_4_group_4.R
 import artan.lavdim_connect_4_group_4.viewModels.SharedViewModel
 import io.garrit.android.multiplayer.Game
 
 @Composable
-fun GameScreen(player: Game, viewModel: SharedViewModel.GameViewModel) {
-
-    var currentPlayerName by remember { mutableStateOf(player.player1.name) }
-
+fun GameScreen(navController: NavController, player: Game, viewModel: SharedViewModel) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -164,7 +160,7 @@ fun GameScreen(player: Game, viewModel: SharedViewModel.GameViewModel) {
 
                 ) {
                 Text(
-                    text = "${currentPlayerName}'s turn",
+                    text = "${player.player1.name}'s turn",
                     color = Color(0xFFD9D9D9),
                     fontWeight = FontWeight.Bold,
                     fontFamily = AvenirRoundedFontFamily,
@@ -199,21 +195,20 @@ fun GameScreen(player: Game, viewModel: SharedViewModel.GameViewModel) {
 
 @Composable
 fun Connect4Grid(viewModel: SharedViewModel.GameViewModel) {
-    Column(
+    Column (
         modifier = Modifier
             .background(Color(0xFF383838), shape = RoundedCornerShape(40.dp))
             .padding(16.dp)
-    ) {
+        )
+    {
         // Grid of clickable cells
         Column {
             for (row in viewModel.board) {
                 Row {
                     for (cell in row) {
                         CellView(cell, onClick = {
-                            if (viewModel.localPlayerTurn) {
-                                val columnIndex = row.indexOf(cell)
-                                viewModel.dropPiece(columnIndex)
-                            }
+                            val columnIndex = row.indexOf(cell)
+                            viewModel.dropPiece(columnIndex)
                         })
                     }
                 }
@@ -226,13 +221,13 @@ fun Connect4Grid(viewModel: SharedViewModel.GameViewModel) {
 
 @Composable
 fun CellView(cell: SharedViewModel.Cell, onClick: () -> Unit) {
-    val cellSize = 50.dp
+    val cellSize = 50.dp  // Adjust this value as needed to fit your screen layout
 
     Box(
         modifier = Modifier
             .size(cellSize)
             .padding(6.dp)
-            .clickable(onClick = onClick),  // Ensure that onClick is only called once
+            .clickable(onClick = onClick),
         contentAlignment = Alignment.Center
     ) {
         when (cell.state) {
@@ -259,5 +254,4 @@ fun CellView(cell: SharedViewModel.Cell, onClick: () -> Unit) {
         }
     }
 }
-
 
