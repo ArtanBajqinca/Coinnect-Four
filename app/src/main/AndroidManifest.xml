@@ -19,7 +19,8 @@
             android:name=".Main.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Artanlavdim_Connect_4_Group_4">
+            android:theme="@style/Theme.Artanlavdim_Connect_4_Group_4"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

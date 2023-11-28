@@ -23,19 +23,17 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import artan.lavdim_connect_4_group_4.Font.AvenirRoundedFontFamily
 import artan.lavdim_connect_4_group_4.Font.AvenirTypography
 import artan.lavdim_connect_4_group_4.R
+import artan.lavdim_connect_4_group_4.multiplayer.Game
+import artan.lavdim_connect_4_group_4.multiplayer.Player
+import artan.lavdim_connect_4_group_4.multiplayer.SupabaseService
 import artan.lavdim_connect_4_group_4.viewModels.SharedViewModel
-import io.garrit.android.multiplayer.Game
-import io.garrit.android.multiplayer.Player
-import io.garrit.android.multiplayer.SupabaseService
-import io.garrit.android.multiplayer.SupabaseService.games
-import io.garrit.android.multiplayer.SupabaseService.player
+
 
 @Composable
-fun LobbyScreen(navController: NavController = rememberNavController(), viewModel: SharedViewModel) {
+fun LobbyScreen(navController: NavController, viewModel: SharedViewModel) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxWidth()
@@ -71,8 +69,8 @@ fun LobbyScreen(navController: NavController = rememberNavController(), viewMode
                 .height(200.dp)
                 .border(width = 4.dp, color = Color(0xFFBAA153), shape = RoundedCornerShape(15.dp))
         ) {
-            items(SupabaseService.users.filter { it != SupabaseService.player }) { player ->
-                userCard(player, viewModel)
+            items(SupabaseService.users) { player ->
+                userCard(player = player, viewModel)
             }
         }
         Spacer(modifier = Modifier.height(20.dp))
@@ -91,7 +89,7 @@ fun LobbyScreen(navController: NavController = rememberNavController(), viewMode
                 .height(300.dp)
                 .border(width = 4.dp, color = Color(0xFFBAA153), shape = RoundedCornerShape(15.dp))
         ) {
-            items(games) { player ->
+            items(SupabaseService.games) { player ->
                 challangeCard(navController,player, viewModel)
             }
         }
@@ -99,14 +97,14 @@ fun LobbyScreen(navController: NavController = rememberNavController(), viewMode
 }
 
 @Composable
-fun userCard(game: Player, viewModel: SharedViewModel) {
+fun userCard(player: Player, viewModel: SharedViewModel) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = 20.dp, top = 20.dp)
     ) {
         Text(
-            text = game.name,
+            text = player.name,
             style = AvenirTypography.displayMedium,
             modifier = Modifier
                 .width(150.dp)
@@ -121,7 +119,7 @@ fun userCard(game: Player, viewModel: SharedViewModel) {
         )
         Button(
             onClick = {
-                viewModel.invite(game)
+                viewModel.invite(player)
             },
             shape = RoundedCornerShape(12.dp),
             colors = ButtonDefaults.buttonColors(
@@ -144,7 +142,7 @@ fun userCard(game: Player, viewModel: SharedViewModel) {
 }
 
 @Composable
-fun challangeCard(navController: NavController = rememberNavController(), player: Game,viewModel: SharedViewModel) {
+fun challangeCard(navController: NavController, player: Game, viewModel: SharedViewModel) {
 
     Column() {
         Text(
@@ -184,6 +182,7 @@ fun challangeCard(navController: NavController = rememberNavController(), player
             Button(
                 onClick = {
                     viewModel.acceptInvite(player)
+                    navController.navigate(Screen.GameScreen.route)
                 },
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(

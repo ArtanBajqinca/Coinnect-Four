@@ -1,5 +1,6 @@
 package artan.lavdim_connect_4_group_4.screens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -37,14 +38,15 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import artan.lavdim_connect_4_group_4.Font.AvenirRoundedFontFamily
 import artan.lavdim_connect_4_group_4.R
+import artan.lavdim_connect_4_group_4.multiplayer.Game
 import artan.lavdim_connect_4_group_4.viewModels.SharedViewModel
-import io.garrit.android.multiplayer.Game
 
+@SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun GameScreen(player: Game, viewModel: SharedViewModel.GameViewModel, navController: NavController = rememberNavController()) {
 
-    var currentPlayerName by remember { mutableStateOf(player.player1.name) }
-
+//    var currentPlayerName by remember { mutableStateOf(player.player1.name) }
+        var currentPlayerName = viewModel.currentPlayerName.value
     Box(
         modifier = Modifier
             .fillMaxWidth()
