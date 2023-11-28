@@ -18,9 +18,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import kotlinx.coroutines.delay
 import androidx.compose.animation.core.Animatable
+import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun SplashScreen(navController: NavController) {
+fun SplashScreen(navController: NavController = rememberNavController()) {
     val scale = remember {
         Animatable(0f)
     }

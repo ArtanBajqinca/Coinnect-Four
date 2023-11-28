@@ -38,17 +38,17 @@ fun Navigation() {
 
     NavHost(navController = navController, startDestination = Screen.SplashScreen.route) {
         composable(route = Screen.SplashScreen.route) {
-            SplashScreen(navController = navController )
+            SplashScreen(navController )
         }
         composable(route = Screen.StartScreen.route) {
             StartScreen(
-                navController = navController,
+                navController,
                 sharedViewModel
             )
         }
         composable(route = Screen.LobbyScreen.route) {
             LobbyScreen(
-                navController = navController,
+                navController,
                 sharedViewModel
             )
         }
@@ -57,13 +57,14 @@ fun Navigation() {
             if (currentGame != null) {
                 GameScreen(
                     player = currentGame,
-                    viewModel = SharedViewModel.GameViewModel()
+                    viewModel = SharedViewModel.GameViewModel(),
+                    navController
                 )
             }
         }
         composable(route = Screen.ResultScreen.route) {
             ResultScreen(
-                navController = navController
+                navController
             )
         }
     }

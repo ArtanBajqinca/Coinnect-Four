@@ -20,11 +20,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import artan.lavdim_connect_4_group_4.Font.AvenirRoundedFontFamily
 import artan.lavdim_connect_4_group_4.R
 
 @Composable
-fun ResultScreen(navController: NavController) {
+fun ResultScreen(navController: NavController = rememberNavController()) {
     Column (
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,

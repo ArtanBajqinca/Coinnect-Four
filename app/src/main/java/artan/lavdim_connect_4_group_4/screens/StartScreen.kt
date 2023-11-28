@@ -23,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,6 +37,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import artan.lavdim_connect_4_group_4.Font.AvenirRoundedFontFamily
 import artan.lavdim_connect_4_group_4.Font.AvenirTypography
 import artan.lavdim_connect_4_group_4.R
@@ -44,8 +46,8 @@ import io.garrit.android.multiplayer.Player
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun StartScreen(navController: NavController, viewModel: SharedViewModel) {
-    var username by remember { mutableStateOf("") }
+fun StartScreen(navController: NavController = rememberNavController(), viewModel: SharedViewModel) {
+    var username by rememberSaveable { mutableStateOf("") }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
