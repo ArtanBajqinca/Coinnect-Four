@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import artan.lavdim_connect_4_group_4.multiplayer.ServerState
 import artan.lavdim_connect_4_group_4.multiplayer.SupabaseService
+import artan.lavdim_connect_4_group_4.multiplayer.SupabaseService.currentGame
 import artan.lavdim_connect_4_group_4.viewModels.SharedViewModel
 import artan.lavdim_connect_4_group_4.screens.GameScreen
 import artan.lavdim_connect_4_group_4.screens.LobbyScreen
@@ -15,6 +16,7 @@ import artan.lavdim_connect_4_group_4.screens.ResultScreen
 import artan.lavdim_connect_4_group_4.screens.Screen
 import artan.lavdim_connect_4_group_4.screens.SplashScreen
 import artan.lavdim_connect_4_group_4.screens.StartScreen
+import artan.lavdim_connect_4_group_4.viewModels.GameViewModel
 
 @Composable
 fun Navigation() {
@@ -53,12 +55,10 @@ fun Navigation() {
             )
         }
         composable(route = Screen.GameScreen.route) {
-            val currentGame = SupabaseService.currentGame
             if (currentGame != null) {
                 GameScreen(
-                    game = currentGame,
-                    viewModel = SharedViewModel.GameViewModel(),
-                    navController
+                    game = currentGame!!,
+                    gameViewModel = GameViewModel(),
                 )
             }
         }

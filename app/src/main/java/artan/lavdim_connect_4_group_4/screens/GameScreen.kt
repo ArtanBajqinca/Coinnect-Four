@@ -35,11 +35,12 @@ import artan.lavdim_connect_4_group_4.R
 import artan.lavdim_connect_4_group_4.multiplayer.Game
 import artan.lavdim_connect_4_group_4.multiplayer.SupabaseService.currentGame
 import artan.lavdim_connect_4_group_4.multiplayer.SupabaseService.player
+import artan.lavdim_connect_4_group_4.viewModels.GameViewModel
 import artan.lavdim_connect_4_group_4.viewModels.SharedViewModel
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
-fun GameScreen(game: Game, viewModel: SharedViewModel.GameViewModel, navController: NavController = rememberNavController()) {
+fun GameScreen(game: Game, gameViewModel: GameViewModel, navController: NavController = rememberNavController()) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -160,7 +161,7 @@ fun GameScreen(game: Game, viewModel: SharedViewModel.GameViewModel, navControll
                 horizontalAlignment = CenterHorizontally,
 
                 ) {
-
+                    Text(text = gameViewModel.localPlayerTurn.value.toString())
                     Text(
                         text = "${game.player1.name} starts first",
                         color = Color(0xFFD9D9D9),
@@ -176,7 +177,7 @@ fun GameScreen(game: Game, viewModel: SharedViewModel.GameViewModel, navControll
                 ) {
 
                     Spacer(modifier = Modifier.height(30.dp))
-                    Connect4Grid(SharedViewModel.GameViewModel())
+                    Connect4Grid(GameViewModel())
 
                 }
                 Column(
@@ -196,7 +197,7 @@ fun GameScreen(game: Game, viewModel: SharedViewModel.GameViewModel, navControll
 }
 
 @Composable
-fun Connect4Grid(viewModel: SharedViewModel.GameViewModel) {
+fun Connect4Grid(gameViewModel: GameViewModel) {
     Column(
         modifier = Modifier
             .background(Color(0xFF383838), shape = RoundedCornerShape(40.dp))
@@ -204,12 +205,12 @@ fun Connect4Grid(viewModel: SharedViewModel.GameViewModel) {
     ) {
         // Grid of clickable cells
         Column {
-            for (row in viewModel.board) {
+            for (row in gameViewModel.board) {
                 Row {
                     for (cell in row) {
                         CellView(cell, onClick = {
                                 val columnIndex = row.indexOf(cell)
-                                viewModel.dropPiece(columnIndex)
+                                gameViewModel.dropPiece(columnIndex)
                         })
                     }
                 }
@@ -221,7 +222,7 @@ fun Connect4Grid(viewModel: SharedViewModel.GameViewModel) {
 
 
 @Composable
-fun CellView(cell: SharedViewModel.Cell, onClick: () -> Unit) {
+fun CellView(cell: GameViewModel.Cell, onClick: () -> Unit) {
     val cellSize = 50.dp
 
     Box(
@@ -232,20 +233,20 @@ fun CellView(cell: SharedViewModel.Cell, onClick: () -> Unit) {
         contentAlignment = Alignment.Center
     ) {
         when (cell.state) {
-            SharedViewModel.CellState.EMPTY -> {
+            GameViewModel.CellState.EMPTY -> {
                 // For empty cells, you might want to show a gray circle or keep it empty
                 Box(modifier = Modifier
                     .size(cellSize)
                     .background(Color(0xFF282828), CircleShape))
             }
-            SharedViewModel.CellState.PLAYER1 -> {
+            GameViewModel.CellState.PLAYER1 -> {
                 Image(
                     painter = painterResource(id = R.drawable.gold_coin),
                     contentDescription = "Gold Coin",
                     modifier = Modifier.size(cellSize)
                 )
             }
-            SharedViewModel.CellState.PLAYER2 -> {
+            GameViewModel.CellState.PLAYER2 -> {
                 Image(
                     painter = painterResource(id = R.drawable.silver_coin),
                     contentDescription = "Silver Coin",

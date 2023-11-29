@@ -45,78 +45,35 @@ class SharedViewModel : ViewModel() {
                         SupabaseService.acceptInvite(game)
                 }
         }
+}
 
 
+
+class GameViewModel : ViewModel(), SupabaseCallback {
         enum class CellState { EMPTY, PLAYER1, PLAYER2 }
 
         data class Cell(var state: CellState = CellState.EMPTY)
 
-        class GameViewModel : ViewModel(), SupabaseCallback {
-                private val _board = List(6) { mutableStateListOf<Cell>().apply { addAll(List(7) { Cell(CellState.EMPTY) }) } }
-                val board: List<MutableList<Cell>> = _board
-                var currentPlayer = mutableStateOf(CellState.PLAYER1)
-                var localPlayerTurn = mutableStateOf(true)
-                var _currentPlayerName = MutableStateFlow(currentGame?.player1?.name ?: "")
-                var currentPlayerName: StateFlow<String> = _currentPlayerName
+        private val _board = List(6) { mutableStateListOf<Cell>().apply { addAll(List(7) { Cell(CellState.EMPTY) }) } }
+        val board: List<MutableList<Cell>> = _board
+        var currentPlayer = mutableStateOf(CellState.PLAYER1)
+        var localPlayerTurn = mutableStateOf(true)
+        var _currentPlayerName = MutableStateFlow(currentGame?.player1?.name ?: "")
+        var currentPlayerName: StateFlow<String> = _currentPlayerName
 
-                init {
-                        SupabaseService.callbackHandler = this
-                        val currentGame = SupabaseService.currentGame
-                        val player = SupabaseService.player
-                        if (currentGame != null && player != null) {
-                                localPlayerTurn.value = player.id == currentGame.player1.id
-                                if(player.id == currentGame.player1.id) {
-                                        _currentPlayerName.value = currentGame.player1.name
-                                }else {
-                                        _currentPlayerName.value = currentGame.player2.name
-                                }
-                        }
+        init {
+                println("init")
+                SupabaseService.callbackHandler = this
+                val currentGame = SupabaseService.currentGame
+                val player = SupabaseService.player
+                if (currentGame != null && player != null) {
+                        localPlayerTurn.value = player.id == currentGame.player1.id
                 }
+        }
 
-                fun dropPiece(column: Int) {
-                        viewModelScope.launch {
-                                if (localPlayerTurn.value) {
-                                        for (row in 5 downTo 0) {
-                                                if (_board[row][column].state == CellState.EMPTY) {
-                                                        _board[row][column] = Cell(currentPlayer.value)
-
-                                                        // Toggle the current player for the next turn
-                                                        currentPlayer.value = if (currentPlayer.value == CellState.PLAYER1) CellState.PLAYER2 else CellState.PLAYER1
-
-                                                        // Update the current player's name
-                                                        _currentPlayerName.value = if (currentPlayer.value == CellState.PLAYER1) currentGame?.player1?.name ?: "" else currentGame?.player2?.name ?: ""
-
-                                                        // Broadcast the move and change turn
-                                                        SupabaseService.sendTurn(column)
-                                                        SupabaseService.releaseTurn()
-                                                        localPlayerTurn.value = false
-
-                                                        // Make sure to break the loop after placing the coin
-                                                        break
-                                                }
-                                        }
-                                }
-                        }
-                }
-
-
-
-
-
-                override suspend fun playerReadyHandler() {
-                        TODO("Not yet implemented")
-                }
-
-                override suspend fun releaseTurnHandler() {
-                        localPlayerTurn.value = true
-                }
-
-                override suspend fun actionHandler(x: Int,y: Int) {
-                        updateBoardFromRemote(x)
-                }
-
-                private fun updateBoardFromRemote(column: Int) {
-                        viewModelScope.launch {
+        fun dropPiece(column: Int) {
+                viewModelScope.launch {
+                        if (localPlayerTurn.value) {
                                 for (row in 5 downTo 0) {
                                         if (_board[row][column].state == CellState.EMPTY) {
                                                 _board[row][column] = Cell(currentPlayer.value)
@@ -124,35 +81,72 @@ class SharedViewModel : ViewModel() {
                                                 // Toggle the current player for the next turn
                                                 currentPlayer.value = if (currentPlayer.value == CellState.PLAYER1) CellState.PLAYER2 else CellState.PLAYER1
 
-                                                // Broadcast the move and change turn
-                                                //SupabaseService.releaseTurn()
+                                                // Update the current player's name
+                                                _currentPlayerName.value = if (currentPlayer.value == CellState.PLAYER1) currentGame?.player1?.name ?: "" else currentGame?.player2?.name ?: ""
 
+                                                // Broadcast the move and change turn
+                                                SupabaseService.sendTurn(column)
+                                                SupabaseService.releaseTurn()
+                                                localPlayerTurn.value = false
+
+                                                // Make sure to break the loop after placing the coin
                                                 break
                                         }
                                 }
                         }
                 }
+        }
 
 
 
 
 
+        override suspend fun playerReadyHandler() {
+                TODO("Not yet implemented")
+        }
 
+        override suspend fun releaseTurnHandler() {
+                localPlayerTurn.value = true
+        }
 
+        override suspend fun actionHandler(x: Int,y: Int) {
+                updateBoardFromRemote(x)
+        }
 
+        private fun updateBoardFromRemote(column: Int) {
+                viewModelScope.launch {
+                        for (row in 5 downTo 0) {
+                                if (_board[row][column].state == CellState.EMPTY) {
+                                        _board[row][column] = Cell(currentPlayer.value)
 
+                                        // Toggle the current player for the next turn
+                                        currentPlayer.value = if (currentPlayer.value == CellState.PLAYER1) CellState.PLAYER2 else CellState.PLAYER1
 
+                                        // Broadcast the move and change turn
+                                        //SupabaseService.releaseTurn()
 
-
-                override suspend fun answerHandler(status: ActionResult) {
-                        // Do not use
-                }
-
-                override suspend fun finishHandler(status: GameResult) {
-                        // Do not use
+                                        break
+                                }
+                        }
                 }
         }
 
 
-}
 
+
+
+
+
+
+
+
+
+
+        override suspend fun answerHandler(status: ActionResult) {
+                // Do not use
+        }
+
+        override suspend fun finishHandler(status: GameResult) {
+                // Do not use
+        }
+}
