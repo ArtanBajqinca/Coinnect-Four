@@ -161,9 +161,9 @@ fun GameScreen(game: Game, gameViewModel: GameViewModel, navController: NavContr
                 horizontalAlignment = CenterHorizontally,
 
                 ) {
-                    Text(text = gameViewModel.localPlayerTurn.value.toString())
                     Text(
-                        text = "${game.player1.name} starts first",
+                        text = if(gameViewModel.localPlayerTurn.value){game.player1.name}
+                        else{game.player2.name},
                         color = Color(0xFFD9D9D9),
                         fontWeight = FontWeight.Bold,
                         fontFamily = AvenirRoundedFontFamily,
@@ -177,7 +177,7 @@ fun GameScreen(game: Game, gameViewModel: GameViewModel, navController: NavContr
                 ) {
 
                     Spacer(modifier = Modifier.height(30.dp))
-                    Connect4Grid(GameViewModel())
+                    Connect4Grid(gameViewModel)
 
                 }
                 Column(

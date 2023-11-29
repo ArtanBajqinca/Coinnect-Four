@@ -123,7 +123,7 @@ class GameViewModel : ViewModel(), SupabaseCallback {
                                         currentPlayer.value = if (currentPlayer.value == CellState.PLAYER1) CellState.PLAYER2 else CellState.PLAYER1
 
                                         // Broadcast the move and change turn
-                                        //SupabaseService.releaseTurn()
+                                        SupabaseService.releaseTurn()
 
                                         break
                                 }
