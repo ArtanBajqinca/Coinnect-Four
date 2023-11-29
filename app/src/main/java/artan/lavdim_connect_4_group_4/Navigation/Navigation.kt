@@ -6,8 +6,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import artan.lavdim_connect_4_group_4.multiplayer.Game
-import artan.lavdim_connect_4_group_4.multiplayer.Player
 import artan.lavdim_connect_4_group_4.multiplayer.ServerState
 import artan.lavdim_connect_4_group_4.multiplayer.SupabaseService
 import artan.lavdim_connect_4_group_4.viewModels.SharedViewModel
@@ -58,7 +56,7 @@ fun Navigation() {
             val currentGame = SupabaseService.currentGame
             if (currentGame != null) {
                 GameScreen(
-                    player = currentGame,
+                    game = currentGame,
                     viewModel = SharedViewModel.GameViewModel(),
                     navController
                 )

@@ -55,17 +55,27 @@ class SharedViewModel : ViewModel() {
                 private val _board = List(6) { mutableStateListOf<Cell>().apply { addAll(List(7) { Cell(CellState.EMPTY) }) } }
                 val board: List<MutableList<Cell>> = _board
                 var currentPlayer = mutableStateOf(CellState.PLAYER1)
-                var localPlayerTurn by mutableStateOf(true)
-                private val _currentPlayerName = MutableStateFlow(currentGame?.player1?.name ?: "")
-                val currentPlayerName: StateFlow<String> = _currentPlayerName
+                var localPlayerTurn = mutableStateOf(true)
+                var _currentPlayerName = MutableStateFlow(currentGame?.player1?.name ?: "")
+                var currentPlayerName: StateFlow<String> = _currentPlayerName
 
                 init {
                         SupabaseService.callbackHandler = this
+                        val currentGame = SupabaseService.currentGame
+                        val player = SupabaseService.player
+                        if (currentGame != null && player != null) {
+                                localPlayerTurn.value = player.id == currentGame.player1.id
+                                if(player.id == currentGame.player1.id) {
+                                        _currentPlayerName.value = currentGame.player1.name
+                                }else {
+                                        _currentPlayerName.value = currentGame.player2.name
+                                }
+                        }
                 }
 
                 fun dropPiece(column: Int) {
                         viewModelScope.launch {
-                                if (localPlayerTurn) {
+                                if (localPlayerTurn.value) {
                                         for (row in 5 downTo 0) {
                                                 if (_board[row][column].state == CellState.EMPTY) {
                                                         _board[row][column] = Cell(currentPlayer.value)
@@ -78,7 +88,8 @@ class SharedViewModel : ViewModel() {
 
                                                         // Broadcast the move and change turn
                                                         SupabaseService.sendTurn(column)
-                                                        localPlayerTurn = false
+                                                        SupabaseService.releaseTurn()
+                                                        localPlayerTurn.value = false
 
                                                         // Make sure to break the loop after placing the coin
                                                         break
@@ -97,7 +108,7 @@ class SharedViewModel : ViewModel() {
                 }
 
                 override suspend fun releaseTurnHandler() {
-
+                        localPlayerTurn.value = true
                 }
 
                 override suspend fun actionHandler(x: Int,y: Int) {
@@ -114,8 +125,7 @@ class SharedViewModel : ViewModel() {
                                                 currentPlayer.value = if (currentPlayer.value == CellState.PLAYER1) CellState.PLAYER2 else CellState.PLAYER1
 
                                                 // Broadcast the move and change turn
-                                                SupabaseService.releaseTurn()
-                                                localPlayerTurn = true
+                                                //SupabaseService.releaseTurn()
 
                                                 break
                                         }

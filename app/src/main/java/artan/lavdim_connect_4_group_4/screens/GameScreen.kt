@@ -19,11 +19,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -33,20 +28,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import artan.lavdim_connect_4_group_4.Font.AvenirRoundedFontFamily
 import artan.lavdim_connect_4_group_4.R
 import artan.lavdim_connect_4_group_4.multiplayer.Game
+import artan.lavdim_connect_4_group_4.multiplayer.SupabaseService.currentGame
+import artan.lavdim_connect_4_group_4.multiplayer.SupabaseService.player
 import artan.lavdim_connect_4_group_4.viewModels.SharedViewModel
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
-fun GameScreen(player: Game, viewModel: SharedViewModel.GameViewModel, navController: NavController = rememberNavController()) {
-
-//    var currentPlayerName by remember { mutableStateOf(player.player1.name) }
-        var currentPlayerName = viewModel.currentPlayerName.value
+fun GameScreen(game: Game, viewModel: SharedViewModel.GameViewModel, navController: NavController = rememberNavController()) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -87,7 +80,7 @@ fun GameScreen(player: Game, viewModel: SharedViewModel.GameViewModel, navContro
                             )
                     ) {
                         Text(
-                            text = player.player1.name,
+                            text = game.player1.name,
                             color = Color(0xFFD9D9D9),
                             fontWeight = FontWeight.Bold,
                             fontFamily = AvenirRoundedFontFamily,
@@ -137,7 +130,7 @@ fun GameScreen(player: Game, viewModel: SharedViewModel.GameViewModel, navContro
                             )
                     ) {
                         Text(
-                            text = player.player2.name,
+                            text = game.player2.name,
                             color = Color(0xFFD9D9D9),
                             fontWeight = FontWeight.Bold,
                             fontFamily = AvenirRoundedFontFamily,
@@ -167,16 +160,17 @@ fun GameScreen(player: Game, viewModel: SharedViewModel.GameViewModel, navContro
                 horizontalAlignment = CenterHorizontally,
 
                 ) {
-                Text(
-                    text = "${currentPlayerName}'s turn",
-                    color = Color(0xFFD9D9D9),
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = AvenirRoundedFontFamily,
-                    fontSize = 40.sp,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .padding(top = 60.dp)
-                )
+
+                    Text(
+                        text = "${game.player1.name} starts first",
+                        color = Color(0xFFD9D9D9),
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = AvenirRoundedFontFamily,
+                        fontSize = 40.sp,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .padding(top = 60.dp)
+                    )
                 Column(
                     modifier = Modifier
                 ) {
