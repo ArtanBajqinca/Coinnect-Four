@@ -214,10 +214,8 @@ fun Connect4Grid(viewModel: SharedViewModel.GameViewModel) {
                 Row {
                     for (cell in row) {
                         CellView(cell, onClick = {
-                            if (viewModel.localPlayerTurn) {
                                 val columnIndex = row.indexOf(cell)
                                 viewModel.dropPiece(columnIndex)
-                            }
                         })
                     }
                 }

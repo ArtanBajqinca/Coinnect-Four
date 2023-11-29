@@ -29,11 +29,12 @@ import artan.lavdim_connect_4_group_4.R
 import artan.lavdim_connect_4_group_4.multiplayer.Game
 import artan.lavdim_connect_4_group_4.multiplayer.Player
 import artan.lavdim_connect_4_group_4.multiplayer.SupabaseService
+import artan.lavdim_connect_4_group_4.multiplayer.SupabaseService.player
 import artan.lavdim_connect_4_group_4.viewModels.SharedViewModel
 
 
 @Composable
-fun LobbyScreen(navController: NavController, viewModel: SharedViewModel) {
+fun LobbyScreen(navController: NavController, viewModel: SharedViewModel,) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxWidth()
@@ -69,7 +70,7 @@ fun LobbyScreen(navController: NavController, viewModel: SharedViewModel) {
                 .height(200.dp)
                 .border(width = 4.dp, color = Color(0xFFBAA153), shape = RoundedCornerShape(15.dp))
         ) {
-            items(SupabaseService.users) { player ->
+            items(SupabaseService.users.filter { it != player }) { player ->
                 userCard(player = player, viewModel)
             }
         }
@@ -86,13 +87,18 @@ fun LobbyScreen(navController: NavController, viewModel: SharedViewModel) {
             verticalArrangement = Arrangement.spacedBy(10.dp),
             modifier = Modifier
                 .width(320.dp)
-                .height(300.dp)
+                .height(225.dp)
                 .border(width = 4.dp, color = Color(0xFFBAA153), shape = RoundedCornerShape(15.dp))
         ) {
             items(SupabaseService.games) { player ->
                 challangeCard(navController,player, viewModel)
             }
         }
+        Spacer(modifier = Modifier.height(40.dp))
+        Text(text = "Your username: ${player?.name} ",
+            style = AvenirTypography.displayMedium,
+            textAlign = TextAlign.Center,
+            modifier = Modifier)
     }
 }
 
