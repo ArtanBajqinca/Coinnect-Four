@@ -86,7 +86,6 @@ class GameViewModel : ViewModel(), SupabaseCallback {
 
                                                 // Broadcast the move and change turn
                                                 SupabaseService.sendTurn(column)
-                                                SupabaseService.releaseTurn()
                                                 localPlayerTurn.value = false
 
                                                 // Make sure to break the loop after placing the coin
@@ -106,7 +105,6 @@ class GameViewModel : ViewModel(), SupabaseCallback {
         }
 
         override suspend fun releaseTurnHandler() {
-                localPlayerTurn.value = true
         }
 
         override suspend fun actionHandler(x: Int,y: Int) {
@@ -124,11 +122,18 @@ class GameViewModel : ViewModel(), SupabaseCallback {
 
                                         // Broadcast the move and change turn
                                         SupabaseService.releaseTurn()
+                                        localPlayerTurn.value = true
+
 
                                         break
                                 }
                         }
                 }
+        }
+
+        fun getCurrentPlayerName(): String {
+                return if (localPlayerTurn.value) currentGame?.player1?.name ?: ""
+                else currentGame?.player2?.name ?: ""
         }
 
 

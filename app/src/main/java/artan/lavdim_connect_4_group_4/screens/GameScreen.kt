@@ -28,6 +28,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import artan.lavdim_connect_4_group_4.Font.AvenirRoundedFontFamily
@@ -40,7 +41,14 @@ import artan.lavdim_connect_4_group_4.viewModels.SharedViewModel
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
-fun GameScreen(game: Game, gameViewModel: GameViewModel, navController: NavController = rememberNavController()) {
+fun GameScreen(game: Game, navController: NavController = rememberNavController()) {
+    val gameViewModel = viewModel<GameViewModel>()
+    val currentPlayerName = if (gameViewModel.currentPlayer.value == GameViewModel.CellState.PLAYER1) {
+        "${game.player1.name}'s turn"
+    } else {
+        "${game.player2.name}'s turn"
+    }
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -162,8 +170,7 @@ fun GameScreen(game: Game, gameViewModel: GameViewModel, navController: NavContr
 
                 ) {
                     Text(
-                        text = if(gameViewModel.localPlayerTurn.value){game.player1.name}
-                        else{game.player2.name},
+                        text = currentPlayerName,
                         color = Color(0xFFD9D9D9),
                         fontWeight = FontWeight.Bold,
                         fontFamily = AvenirRoundedFontFamily,
