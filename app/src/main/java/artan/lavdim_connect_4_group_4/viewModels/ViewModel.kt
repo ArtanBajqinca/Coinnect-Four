@@ -60,6 +60,8 @@ class GameViewModel : ViewModel(), SupabaseCallback {
         var localPlayerTurn = mutableStateOf(true)
         var PlayerWon = mutableStateOf(false)
         var playerWinner: String? by mutableStateOf(null)
+        var winningPositions = mutableStateListOf<Pair<Int, Int>>()
+
 
 
         init {
@@ -74,6 +76,11 @@ class GameViewModel : ViewModel(), SupabaseCallback {
 
         fun dropPiece(column: Int) {
                 viewModelScope.launch {
+
+                        if (PlayerWon.value) {
+                                return@launch
+                        }
+
                         if (localPlayerTurn.value) {
                                 for (row in _board.indices.reversed()) {
                                         if (_board[row][column].state == CellState.EMPTY) {
@@ -105,12 +112,10 @@ class GameViewModel : ViewModel(), SupabaseCallback {
                                         // Check for wins in horizontal, vertical, and diagonal directions
                                         if (checkHorizontalWin(row, col) || checkVerticalWin(row, col) || checkDiagonalWin(row, col)) {
                                                 // Declare the current player as the winner
-                                                // You can set some game state or display a winning message here
                                                 println("Player ${cell.state} wins!")
                                                 PlayerWon.value = true
                                                 playerWinner = if (cell.state == CellState.PLAYER1) currentGame?.player1?.name
                                                 else currentGame?.player2?.name
-                                                // You can also call a function to handle the win, e.g., gameWon(cell.state)
                                                 return
                                         }
                                 }
@@ -119,27 +124,38 @@ class GameViewModel : ViewModel(), SupabaseCallback {
         }
 
         private fun checkHorizontalWin(row: Int, col: Int): Boolean {
-                // Check for horizontal win to the right
-                return (col + 3 < 7) && (board[row][col].state == board[row][col + 1].state) &&
-                        (board[row][col].state == board[row][col + 2].state) &&
-                        (board[row][col].state == board[row][col + 3].state)
+                if (col + 3 < 7 && board[row][col].state == board[row][col + 1].state &&
+                        board[row][col].state == board[row][col + 2].state &&
+                        board[row][col].state == board[row][col + 3].state) {
+                        winningPositions.addAll((0..3).map { Pair(row, col + it) })
+                        return true
+                }
+                return false
         }
 
         private fun checkVerticalWin(row: Int, col: Int): Boolean {
-                // Check for vertical win upwards
-                return (row - 3 >= 0) && (board[row][col].state == board[row - 1][col].state) &&
-                        (board[row][col].state == board[row - 2][col].state) &&
-                        (board[row][col].state == board[row - 3][col].state)
+                if (row - 3 >= 0 && board[row][col].state == board[row - 1][col].state &&
+                        board[row][col].state == board[row - 2][col].state &&
+                        board[row][col].state == board[row - 3][col].state) {
+                        winningPositions.addAll((-3..0).map { Pair(row + it, col) })
+                        return true
+                }
+                return false
         }
 
         private fun checkDiagonalWin(row: Int, col: Int): Boolean {
-                // Check for diagonal win (up-right and up-left directions)
-                return (col + 3 < 7 && row - 3 >= 0 && board[row][col].state == board[row - 1][col + 1].state &&
+                if (col + 3 < 7 && row - 3 >= 0 && board[row][col].state == board[row - 1][col + 1].state &&
                         board[row][col].state == board[row - 2][col + 2].state &&
-                        board[row][col].state == board[row - 3][col + 3].state) ||
-                        (col - 3 >= 0 && row - 3 >= 0 && board[row][col].state == board[row - 1][col - 1].state &&
-                                board[row][col].state == board[row - 2][col - 2].state &&
-                                board[row][col].state == board[row - 3][col - 3].state)
+                        board[row][col].state == board[row - 3][col + 3].state) {
+                        winningPositions.addAll((0..3).map { Pair(row - it, col + it) })
+                        return true
+                } else if (col - 3 >= 0 && row - 3 >= 0 && board[row][col].state == board[row - 1][col - 1].state &&
+                        board[row][col].state == board[row - 2][col - 2].state &&
+                        board[row][col].state == board[row - 3][col - 3].state) {
+                        winningPositions.addAll((0..3).map { Pair(row - it, col - it) })
+                        return true
+                }
+                return false
         }
 
 
