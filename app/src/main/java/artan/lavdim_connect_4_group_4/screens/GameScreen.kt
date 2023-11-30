@@ -28,16 +28,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import artan.lavdim_connect_4_group_4.Font.AvenirRoundedFontFamily
 import artan.lavdim_connect_4_group_4.R
-import artan.lavdim_connect_4_group_4.multiplayer.Game
-import artan.lavdim_connect_4_group_4.multiplayer.SupabaseService.currentGame
-import artan.lavdim_connect_4_group_4.multiplayer.SupabaseService.player
 import artan.lavdim_connect_4_group_4.viewModels.GameViewModel
-import artan.lavdim_connect_4_group_4.viewModels.SharedViewModel
+import io.garrit.android.multiplayer.Game
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
@@ -48,7 +44,7 @@ fun GameScreen(game: Game, navController: NavController = rememberNavController(
         "${game.player2.name}'s turn"
     }
 
-    if ( gameViewModel.PlayerWon.value){
+    if ( gameViewModel.playerWon.value){
         navController.navigate(Screen.ResultScreen.route)
 
     }
@@ -129,7 +125,7 @@ fun GameScreen(game: Game, navController: NavController = rememberNavController(
                         .padding(start = 30.dp, top = 38.dp, end = 30.dp)
                 )
 
-                Column() {
+                Column {
                     Box(
                         modifier = Modifier
                             .padding(start = 0.dp, top = 29.dp)

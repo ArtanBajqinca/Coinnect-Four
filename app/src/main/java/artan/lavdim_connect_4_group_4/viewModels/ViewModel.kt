@@ -1,26 +1,18 @@
 package artan.lavdim_connect_4_group_4.viewModels
 
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
-import artan.lavdim_connect_4_group_4.multiplayer.ActionResult
-import artan.lavdim_connect_4_group_4.multiplayer.Game
-import artan.lavdim_connect_4_group_4.multiplayer.GameResult
-import artan.lavdim_connect_4_group_4.multiplayer.Player
-import artan.lavdim_connect_4_group_4.multiplayer.SupabaseCallback
-import artan.lavdim_connect_4_group_4.multiplayer.SupabaseService
-import artan.lavdim_connect_4_group_4.multiplayer.SupabaseService.currentGame
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import io.garrit.android.multiplayer.ActionResult
+import io.garrit.android.multiplayer.Game
+import io.garrit.android.multiplayer.GameResult
+import io.garrit.android.multiplayer.Player
+import io.garrit.android.multiplayer.SupabaseCallback
+import io.garrit.android.multiplayer.SupabaseService
+import io.garrit.android.multiplayer.SupabaseService.currentGame
 import kotlinx.coroutines.launch
 
 class SharedViewModel : ViewModel() {
@@ -57,8 +49,8 @@ class GameViewModel : ViewModel(), SupabaseCallback {
         private val _board = List(6) { mutableStateListOf<Cell>().apply { addAll(List(7) { Cell(CellState.EMPTY) }) } }
         val board: List<MutableList<Cell>> = _board
         var currentPlayer = mutableStateOf(CellState.PLAYER1)
-        var localPlayerTurn = mutableStateOf(true)
-        var PlayerWon = mutableStateOf(false)
+        private var localPlayerTurn = mutableStateOf(true)
+        var playerWon = mutableStateOf(false)
         var playerWinner: String? by mutableStateOf(null)
 
 
@@ -97,7 +89,7 @@ class GameViewModel : ViewModel(), SupabaseCallback {
                 }
         }
 
-        fun checkForWin() {
+        private fun checkForWin() {
                 for (row in 0 until 6) {
                         for (col in 0 until 7) {
                                 val cell = board[row][col]
@@ -107,7 +99,7 @@ class GameViewModel : ViewModel(), SupabaseCallback {
                                                 // Declare the current player as the winner
                                                 // You can set some game state or display a winning message here
                                                 println("Player ${cell.state} wins!")
-                                                PlayerWon.value = true
+                                                playerWon.value = true
                                                 playerWinner = if (cell.state == CellState.PLAYER1) currentGame?.player1?.name
                                                 else currentGame?.player2?.name
                                                 // You can also call a function to handle the win, e.g., gameWon(cell.state)
@@ -142,14 +134,6 @@ class GameViewModel : ViewModel(), SupabaseCallback {
                                 board[row][col].state == board[row - 3][col - 3].state)
         }
 
-
-        override suspend fun playerReadyHandler() {
-                TODO("Not yet implemented")
-        }
-
-        override suspend fun releaseTurnHandler() {
-        }
-
         override suspend fun actionHandler(x: Int,y: Int) {
                 updateBoardFromRemote(x)
         }
@@ -173,11 +157,21 @@ class GameViewModel : ViewModel(), SupabaseCallback {
                         }
                 }
         }
+        fun leaveGame(){
+                viewModelScope.launch {
+                        SupabaseService.leaveGame()
+                }
+        }
+
+        override suspend fun playerReadyHandler() {
+                TODO("Not yet implemented")
+        }
 
         override suspend fun answerHandler(status: ActionResult) {
                 // Do not use
         }
-
+        override suspend fun releaseTurnHandler() {
+        }
         override suspend fun finishHandler(status: GameResult) {
                 // Do not use
         }

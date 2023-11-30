@@ -23,8 +23,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import artan.lavdim_connect_4_group_4.Font.AvenirRoundedFontFamily
 import artan.lavdim_connect_4_group_4.R
-import artan.lavdim_connect_4_group_4.multiplayer.SupabaseService
 import artan.lavdim_connect_4_group_4.viewModels.GameViewModel
+import io.garrit.android.multiplayer.SupabaseService
 
 @Composable
 fun ResultScreen(navController: NavController = rememberNavController(), gameViewModel: GameViewModel) {
@@ -56,7 +56,8 @@ fun ResultScreen(navController: NavController = rememberNavController(), gameVie
 
         Button(
             onClick = {
-                navController.navigate(Screen.LobbyScreen.route)
+                gameViewModel.leaveGame()
+                navController.navigate(Screen.StartScreen.route)
             },
             shape = RoundedCornerShape(12.dp),
             colors = ButtonDefaults.buttonColors(

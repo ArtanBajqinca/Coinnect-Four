@@ -26,15 +26,15 @@ import androidx.navigation.NavController
 import artan.lavdim_connect_4_group_4.Font.AvenirRoundedFontFamily
 import artan.lavdim_connect_4_group_4.Font.AvenirTypography
 import artan.lavdim_connect_4_group_4.R
-import artan.lavdim_connect_4_group_4.multiplayer.Game
-import artan.lavdim_connect_4_group_4.multiplayer.Player
-import artan.lavdim_connect_4_group_4.multiplayer.SupabaseService
-import artan.lavdim_connect_4_group_4.multiplayer.SupabaseService.player
 import artan.lavdim_connect_4_group_4.viewModels.SharedViewModel
+import io.garrit.android.multiplayer.Game
+import io.garrit.android.multiplayer.Player
+import io.garrit.android.multiplayer.SupabaseService
+import io.garrit.android.multiplayer.SupabaseService.player
 
 
 @Composable
-fun LobbyScreen(navController: NavController, viewModel: SharedViewModel,) {
+fun LobbyScreen(navController: NavController, viewModel: SharedViewModel) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxWidth()
@@ -71,7 +71,7 @@ fun LobbyScreen(navController: NavController, viewModel: SharedViewModel,) {
                 .border(width = 4.dp, color = Color(0xFFBAA153), shape = RoundedCornerShape(15.dp))
         ) {
             items(SupabaseService.users.filter { it != player }) { player ->
-                userCard(player = player, viewModel)
+                UserCard(player = player, viewModel)
             }
         }
         Spacer(modifier = Modifier.height(20.dp))
@@ -91,7 +91,7 @@ fun LobbyScreen(navController: NavController, viewModel: SharedViewModel,) {
                 .border(width = 4.dp, color = Color(0xFFBAA153), shape = RoundedCornerShape(15.dp))
         ) {
             items(SupabaseService.games) { player ->
-                challangeCard(navController,player, viewModel)
+                ChallengeCard(navController,player, viewModel)
             }
         }
         Spacer(modifier = Modifier.height(40.dp))
@@ -103,7 +103,7 @@ fun LobbyScreen(navController: NavController, viewModel: SharedViewModel,) {
 }
 
 @Composable
-fun userCard(player: Player, viewModel: SharedViewModel) {
+fun UserCard(player: Player, viewModel: SharedViewModel) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -148,9 +148,9 @@ fun userCard(player: Player, viewModel: SharedViewModel) {
 }
 
 @Composable
-fun challangeCard(navController: NavController, player: Game, viewModel: SharedViewModel) {
+fun ChallengeCard(navController: NavController, player: Game, viewModel: SharedViewModel) {
 
-    Column() {
+    Column {
         Text(
             text = buildAnnotatedString {
                 withStyle(

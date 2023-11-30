@@ -3,14 +3,10 @@ package artan.lavdim_connect_4_group_4.Navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import artan.lavdim_connect_4_group_4.multiplayer.ServerState
-import artan.lavdim_connect_4_group_4.multiplayer.SupabaseService
-import artan.lavdim_connect_4_group_4.multiplayer.SupabaseService.currentGame
-import artan.lavdim_connect_4_group_4.viewModels.SharedViewModel
+
 import artan.lavdim_connect_4_group_4.screens.GameScreen
 import artan.lavdim_connect_4_group_4.screens.LobbyScreen
 import artan.lavdim_connect_4_group_4.screens.ResultScreen
@@ -18,6 +14,10 @@ import artan.lavdim_connect_4_group_4.screens.Screen
 import artan.lavdim_connect_4_group_4.screens.SplashScreen
 import artan.lavdim_connect_4_group_4.screens.StartScreen
 import artan.lavdim_connect_4_group_4.viewModels.GameViewModel
+import artan.lavdim_connect_4_group_4.viewModels.SharedViewModel
+import io.garrit.android.multiplayer.ServerState
+import io.garrit.android.multiplayer.SupabaseService
+import io.garrit.android.multiplayer.SupabaseService.currentGame
 
 @Composable
 fun Navigation() {
@@ -33,10 +33,6 @@ fun Navigation() {
                 if (navController.currentDestination?.route != Screen.GameScreen.route) {
                     navController.navigate(Screen.GameScreen.route)
                 }
-            }
-            ServerState.GAME -> {
-                // Navigate to the GameScreen when the serverState is LOADING_GAME
-                navController.navigate(Screen.GameScreen.route)
             }
             else -> {}
         }
