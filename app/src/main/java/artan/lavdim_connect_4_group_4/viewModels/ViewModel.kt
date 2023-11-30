@@ -72,27 +72,24 @@ class GameViewModel : ViewModel(), SupabaseCallback {
         fun dropPiece(column: Int) {
                 viewModelScope.launch {
                         if (localPlayerTurn.value) {
-                                for (row in 5 downTo 0) {
+                                for (row in _board.indices.reversed()) {
                                         if (_board[row][column].state == CellState.EMPTY) {
                                                 _board[row][column] = Cell(currentPlayer.value)
 
                                                 // Toggle the current player for the next turn
-                                                currentPlayer.value = if (currentPlayer.value == CellState.PLAYER1) CellState.PLAYER2 else CellState.PLAYER1
+                                                currentPlayer.value =
+                                                        if (currentPlayer.value == CellState.PLAYER1) CellState.PLAYER2 else CellState.PLAYER1
 
                                                 // Broadcast the move and change turn
                                                 SupabaseService.sendTurn(column)
                                                 localPlayerTurn.value = false
 
-                                                // Make sure to break the loop after placing the coin
                                                 break
                                         }
                                 }
                         }
                 }
         }
-
-
-
 
 
         override suspend fun playerReadyHandler() {
@@ -108,39 +105,23 @@ class GameViewModel : ViewModel(), SupabaseCallback {
 
         private fun updateBoardFromRemote(column: Int) {
                 viewModelScope.launch {
-                        for (row in 5 downTo 0) {
+                        for (row in _board.indices.reversed()) {
                                 if (_board[row][column].state == CellState.EMPTY) {
                                         _board[row][column] = Cell(currentPlayer.value)
 
                                         // Toggle the current player for the next turn
-                                        currentPlayer.value = if (currentPlayer.value == CellState.PLAYER1) CellState.PLAYER2 else CellState.PLAYER1
+                                        currentPlayer.value =
+                                                if (currentPlayer.value == CellState.PLAYER1) CellState.PLAYER2 else CellState.PLAYER1
 
                                         // Broadcast the move and change turn
                                         SupabaseService.releaseTurn()
                                         localPlayerTurn.value = true
-
 
                                         break
                                 }
                         }
                 }
         }
-
-        fun getCurrentPlayerName(): String {
-                return if (localPlayerTurn.value) currentGame?.player1?.name ?: ""
-                else currentGame?.player2?.name ?: ""
-        }
-
-
-
-
-
-
-
-
-
-
-
 
         override suspend fun answerHandler(status: ActionResult) {
                 // Do not use

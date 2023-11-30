@@ -214,10 +214,9 @@ fun Connect4Grid(gameViewModel: GameViewModel) {
         Column {
             for (row in gameViewModel.board) {
                 Row {
-                    for (cell in row) {
+                    for ((columnIndex, cell) in row.withIndex()) {
                         CellView(cell, onClick = {
-                                val columnIndex = row.indexOf(cell)
-                                gameViewModel.dropPiece(columnIndex)
+                            gameViewModel.dropPiece(columnIndex)
                         })
                     }
                 }
@@ -225,6 +224,7 @@ fun Connect4Grid(gameViewModel: GameViewModel) {
         }
     }
 }
+
 
 
 
