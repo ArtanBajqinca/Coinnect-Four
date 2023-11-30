@@ -69,7 +69,7 @@ fun ResultScreen(navController: NavController = rememberNavController(), gameVie
                 .padding(top = 30.dp)
         ) {
             Text(
-                "BACK TO LOBBY",
+                "BACK TO START",
                 color = Color(0xFF282828),
                 fontWeight = FontWeight.Bold,
                 fontFamily = AvenirRoundedFontFamily,

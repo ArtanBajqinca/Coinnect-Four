@@ -247,7 +247,7 @@ fun CellView(cell: GameViewModel.Cell, isWinningCell: Boolean, onClick: () -> Un
             .clickable(onClick = onClick)
             .border(
                 width = if (isWinningCell) 3.dp else 0.dp,
-                color = if (isWinningCell) Color.Green else Color.Transparent,
+                color = if (isWinningCell) Color(0xFF00FF15) else Color.Transparent,
                 shape = CircleShape
             ),
         contentAlignment = Alignment.Center
