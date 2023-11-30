@@ -95,7 +95,7 @@ fun LobbyScreen(navController: NavController, viewModel: SharedViewModel,) {
             }
         }
         Spacer(modifier = Modifier.height(40.dp))
-        Text(text = "Your username: ${player?.name} ",
+        Text(text = "Your Username: ${player?.name} ",
             style = AvenirTypography.displayMedium,
             textAlign = TextAlign.Center,
             modifier = Modifier)

@@ -58,8 +58,6 @@ class GameViewModel : ViewModel(), SupabaseCallback {
         val board: List<MutableList<Cell>> = _board
         var currentPlayer = mutableStateOf(CellState.PLAYER1)
         var localPlayerTurn = mutableStateOf(true)
-        var _currentPlayerName = MutableStateFlow(currentGame?.player1?.name ?: "")
-        var currentPlayerName: StateFlow<String> = _currentPlayerName
 
         init {
                 println("init")
@@ -80,9 +78,6 @@ class GameViewModel : ViewModel(), SupabaseCallback {
 
                                                 // Toggle the current player for the next turn
                                                 currentPlayer.value = if (currentPlayer.value == CellState.PLAYER1) CellState.PLAYER2 else CellState.PLAYER1
-
-                                                // Update the current player's name
-                                                _currentPlayerName.value = if (currentPlayer.value == CellState.PLAYER1) currentGame?.player1?.name ?: "" else currentGame?.player2?.name ?: ""
 
                                                 // Broadcast the move and change turn
                                                 SupabaseService.sendTurn(column)
