@@ -69,7 +69,7 @@ class GameViewModel : ViewModel(), SupabaseCallback {
         fun dropPiece(column: Int) {
                 viewModelScope.launch {
 
-                        if (PlayerWon.value) {
+                        if (playerWon.value) {
                                 return@launch
                         }
 

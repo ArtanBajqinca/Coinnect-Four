@@ -34,11 +34,10 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import artan.lavdim_connect_4_group_4.Font.AvenirRoundedFontFamily
 import artan.lavdim_connect_4_group_4.R
-import artan.lavdim_connect_4_group_4.multiplayer.Game
-import artan.lavdim_connect_4_group_4.multiplayer.SupabaseService.currentGame
-import artan.lavdim_connect_4_group_4.multiplayer.SupabaseService.player
+
 import artan.lavdim_connect_4_group_4.viewModels.GameViewModel
 import artan.lavdim_connect_4_group_4.viewModels.SharedViewModel
+import io.garrit.android.multiplayer.Game
 import kotlinx.coroutines.delay
 
 @SuppressLint("StateFlowValueCalledInComposition")
@@ -50,8 +49,8 @@ fun GameScreen(game: Game, navController: NavController = rememberNavController(
         "${game.player2.name}'s turn"
     }
 
-    LaunchedEffect(gameViewModel.PlayerWon.value) {
-        if (gameViewModel.PlayerWon.value) {
+    LaunchedEffect(gameViewModel.playerWon.value) {
+        if (gameViewModel.playerWon.value) {
             delay(2000)
             navController.navigate(Screen.ResultScreen.route)
         }
