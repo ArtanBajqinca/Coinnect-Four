@@ -19,6 +19,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -33,6 +34,8 @@ import androidx.navigation.compose.rememberNavController
 import artan.lavdim_connect_4_group_4.Font.AvenirRoundedFontFamily
 import artan.lavdim_connect_4_group_4.R
 import artan.lavdim_connect_4_group_4.viewModels.GameViewModel
+import artan.lavdim_connect_4_group_4.viewModels.SharedViewModel
+import kotlinx.coroutines.delay
 import io.garrit.android.multiplayer.Game
 
 @SuppressLint("StateFlowValueCalledInComposition")
@@ -44,9 +47,11 @@ fun GameScreen(game: Game, navController: NavController = rememberNavController(
         "${game.player2.name}'s turn"
     }
 
-    if ( gameViewModel.playerWon.value){
-        navController.navigate(Screen.ResultScreen.route)
-
+    LaunchedEffect(gameViewModel.PlayerWon.value) {
+        if (gameViewModel.PlayerWon.value) {
+            delay(2000)
+            navController.navigate(Screen.ResultScreen.route)
+        }
     }
 
     Box(
@@ -212,10 +217,11 @@ fun Connect4Grid(gameViewModel: GameViewModel) {
     ) {
         // Grid of clickable cells
         Column {
-            for (row in gameViewModel.board) {
+            for ((rowIndex, row) in gameViewModel.board.withIndex()) {
                 Row {
                     for ((columnIndex, cell) in row.withIndex()) {
-                        CellView(cell, onClick = {
+                        val isWinningCell = Pair(rowIndex, columnIndex) in gameViewModel.winningPositions
+                        CellView(cell, isWinningCell, onClick = {
                             gameViewModel.dropPiece(columnIndex)
                         })
                     }
@@ -229,19 +235,24 @@ fun Connect4Grid(gameViewModel: GameViewModel) {
 
 
 @Composable
-fun CellView(cell: GameViewModel.Cell, onClick: () -> Unit) {
+fun CellView(cell: GameViewModel.Cell, isWinningCell: Boolean, onClick: () -> Unit) {
     val cellSize = 50.dp
 
     Box(
         modifier = Modifier
             .size(cellSize)
             .padding(6.dp)
-            .clickable(onClick = onClick),  // Ensure that onClick is only called once
+            .clickable(onClick = onClick)
+            .border(
+                width = if (isWinningCell) 3.dp else 0.dp,
+                color = if (isWinningCell) Color.Green else Color.Transparent,
+                shape = CircleShape
+            ),
         contentAlignment = Alignment.Center
     ) {
         when (cell.state) {
             GameViewModel.CellState.EMPTY -> {
-                // For empty cells, you might want to show a gray circle or keep it empty
+
                 Box(modifier = Modifier
                     .size(cellSize)
                     .background(Color(0xFF282828), CircleShape))
