@@ -133,7 +133,7 @@ fun GameScreen(game: Game, navController: NavController = rememberNavController(
                         .padding(start = 30.dp, top = 38.dp, end = 30.dp)
                 )
 
-                Column() {
+                Column {
                     Box(
                         modifier = Modifier
                             .padding(start = 0.dp, top = 29.dp)
