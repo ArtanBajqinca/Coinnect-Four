@@ -49,6 +49,11 @@ fun GameScreen(game: Game, navController: NavController = rememberNavController(
         "${game.player2.name}'s turn"
     }
 
+    if ( gameViewModel.PlayerWon.value){
+        navController.navigate(Screen.ResultScreen.route)
+
+    }
+
     Box(
         modifier = Modifier
             .fillMaxWidth()

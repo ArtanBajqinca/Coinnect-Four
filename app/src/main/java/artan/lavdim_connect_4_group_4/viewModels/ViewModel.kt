@@ -58,6 +58,8 @@ class GameViewModel : ViewModel(), SupabaseCallback {
         val board: List<MutableList<Cell>> = _board
         var currentPlayer = mutableStateOf(CellState.PLAYER1)
         var localPlayerTurn = mutableStateOf(true)
+        var PlayerWon = mutableStateOf(false)
+
 
         init {
                 println("init")
@@ -84,11 +86,57 @@ class GameViewModel : ViewModel(), SupabaseCallback {
                                                 SupabaseService.sendTurn(column)
                                                 localPlayerTurn.value = false
 
+                                                // Check for a win condition after the move
+                                                checkForWin()
+
                                                 break
                                         }
                                 }
                         }
                 }
+        }
+
+        fun checkForWin() {
+                for (row in 0 until 6) {
+                        for (col in 0 until 7) {
+                                val cell = board[row][col]
+                                if (cell.state != CellState.EMPTY) {
+                                        // Check for wins in horizontal, vertical, and diagonal directions
+                                        if (checkHorizontalWin(row, col) || checkVerticalWin(row, col) || checkDiagonalWin(row, col)) {
+                                                // Declare the current player as the winner
+                                                // You can set some game state or display a winning message here
+                                                println("Player ${cell.state} wins!")
+                                                PlayerWon.value = true
+                                                // You can also call a function to handle the win, e.g., gameWon(cell.state)
+                                                return
+                                        }
+                                }
+                        }
+                }
+        }
+
+        private fun checkHorizontalWin(row: Int, col: Int): Boolean {
+                // Check for horizontal win to the right
+                return (col + 3 < 7) && (board[row][col].state == board[row][col + 1].state) &&
+                        (board[row][col].state == board[row][col + 2].state) &&
+                        (board[row][col].state == board[row][col + 3].state)
+        }
+
+        private fun checkVerticalWin(row: Int, col: Int): Boolean {
+                // Check for vertical win upwards
+                return (row - 3 >= 0) && (board[row][col].state == board[row - 1][col].state) &&
+                        (board[row][col].state == board[row - 2][col].state) &&
+                        (board[row][col].state == board[row - 3][col].state)
+        }
+
+        private fun checkDiagonalWin(row: Int, col: Int): Boolean {
+                // Check for diagonal win (up-right and up-left directions)
+                return (col + 3 < 7 && row - 3 >= 0 && board[row][col].state == board[row - 1][col + 1].state &&
+                        board[row][col].state == board[row - 2][col + 2].state &&
+                        board[row][col].state == board[row - 3][col + 3].state) ||
+                        (col - 3 >= 0 && row - 3 >= 0 && board[row][col].state == board[row - 1][col - 1].state &&
+                                board[row][col].state == board[row - 2][col - 2].state &&
+                                board[row][col].state == board[row - 3][col - 3].state)
         }
 
 
@@ -112,7 +160,7 @@ class GameViewModel : ViewModel(), SupabaseCallback {
                                         // Toggle the current player for the next turn
                                         currentPlayer.value =
                                                 if (currentPlayer.value == CellState.PLAYER1) CellState.PLAYER2 else CellState.PLAYER1
-
+                                        checkForWin()
                                         // Broadcast the move and change turn
                                         SupabaseService.releaseTurn()
                                         localPlayerTurn.value = true
