@@ -46,6 +46,7 @@ fun GameScreen(game: Game, navController: NavController = rememberNavController(
 
     if ( gameViewModel.playerWon.value){
         navController.navigate(Screen.ResultScreen.route)
+        // ausduahsdh
 
     }
 
