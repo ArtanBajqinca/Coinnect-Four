@@ -59,6 +59,7 @@ class GameViewModel : ViewModel(), SupabaseCallback {
         var currentPlayer = mutableStateOf(CellState.PLAYER1)
         var localPlayerTurn = mutableStateOf(true)
         var PlayerWon = mutableStateOf(false)
+        var playerWinner: String? by mutableStateOf(null)
 
 
         init {
@@ -107,6 +108,8 @@ class GameViewModel : ViewModel(), SupabaseCallback {
                                                 // You can set some game state or display a winning message here
                                                 println("Player ${cell.state} wins!")
                                                 PlayerWon.value = true
+                                                playerWinner = if (cell.state == CellState.PLAYER1) currentGame?.player1?.name
+                                                else currentGame?.player2?.name
                                                 // You can also call a function to handle the win, e.g., gameWon(cell.state)
                                                 return
                                         }

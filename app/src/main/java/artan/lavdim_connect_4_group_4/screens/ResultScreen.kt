@@ -23,9 +23,11 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import artan.lavdim_connect_4_group_4.Font.AvenirRoundedFontFamily
 import artan.lavdim_connect_4_group_4.R
+import artan.lavdim_connect_4_group_4.multiplayer.SupabaseService
+import artan.lavdim_connect_4_group_4.viewModels.GameViewModel
 
 @Composable
-fun ResultScreen(navController: NavController = rememberNavController()) {
+fun ResultScreen(navController: NavController = rememberNavController(), gameViewModel: GameViewModel) {
     Column (
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -33,14 +35,16 @@ fun ResultScreen(navController: NavController = rememberNavController()) {
 
     ) {
         Image(
-            painter = painterResource(id = R.drawable.gold_coin),
+            painter = if (gameViewModel.playerWinner == SupabaseService.currentGame?.player1?.name ) painterResource(id = R.drawable.gold_coin)
+            else painterResource(id = R.drawable.silver_coin)
+            ,
             contentDescription = "Gold Coin",
             modifier = Modifier
                 .width(110.dp)
                 .height(110.dp)
         )
         Text(
-            text = "Arctan Won!",
+            text = "${gameViewModel.playerWinner} Won!",
             color = Color(0xFFD9D9D9),
             fontWeight = FontWeight.Bold,
             fontFamily = AvenirRoundedFontFamily,
@@ -49,13 +53,16 @@ fun ResultScreen(navController: NavController = rememberNavController()) {
             modifier = Modifier
                 .padding(top = 30.dp)
         )
+
         Button(
             onClick = {
                 navController.navigate(Screen.LobbyScreen.route)
             },
             shape = RoundedCornerShape(12.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFFBAA153)
+                containerColor = if (gameViewModel.playerWinner == SupabaseService.currentGame?.player1?.name ) Color(0xFFBAA153)
+                else Color(0xFFD9D9D9)
+
             ),
             modifier = Modifier
                 .padding(top = 30.dp)

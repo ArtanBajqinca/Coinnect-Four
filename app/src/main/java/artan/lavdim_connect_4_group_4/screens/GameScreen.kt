@@ -41,8 +41,7 @@ import artan.lavdim_connect_4_group_4.viewModels.SharedViewModel
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
-fun GameScreen(game: Game, navController: NavController = rememberNavController()) {
-    val gameViewModel = viewModel<GameViewModel>()
+fun GameScreen(game: Game, navController: NavController = rememberNavController(), gameViewModel: GameViewModel) {
     val currentPlayerName = if (gameViewModel.currentPlayer.value == GameViewModel.CellState.PLAYER1) {
         "${game.player1.name}'s turn"
     } else {

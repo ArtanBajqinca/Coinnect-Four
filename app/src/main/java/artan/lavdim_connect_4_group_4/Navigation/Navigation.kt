@@ -22,6 +22,7 @@ import artan.lavdim_connect_4_group_4.viewModels.GameViewModel
 @Composable
 fun Navigation() {
     val sharedViewModel = SharedViewModel()
+    val gameViewModel = GameViewModel()
     val navController = rememberNavController()
     val serverState = SupabaseService.serverState.collectAsState()
 
@@ -61,14 +62,16 @@ fun Navigation() {
             if (currentGame != null) {
                 GameScreen(
                     game = currentGame!!,
-                    navController = navController
+                    navController = navController,
+                    gameViewModel
                 )
             }
         }
 
         composable(route = Screen.ResultScreen.route) {
             ResultScreen(
-                navController = navController
+                navController = navController,
+                gameViewModel
             )
         }
     }
