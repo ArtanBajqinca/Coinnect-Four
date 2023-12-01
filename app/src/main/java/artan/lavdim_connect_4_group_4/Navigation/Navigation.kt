@@ -6,7 +6,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-
 import artan.lavdim_connect_4_group_4.screens.GameScreen
 import artan.lavdim_connect_4_group_4.screens.LobbyScreen
 import artan.lavdim_connect_4_group_4.screens.ResultScreen
@@ -29,7 +28,6 @@ fun Navigation() {
     LaunchedEffect(serverState.value) {
         when (serverState.value) {
             ServerState.LOADING_GAME, ServerState.GAME -> {
-                // Navigate to GameScreen only if it's not the current destination
                 if (navController.currentDestination?.route != Screen.GameScreen.route) {
                     navController.navigate(Screen.GameScreen.route)
                 }
@@ -55,7 +53,6 @@ fun Navigation() {
             )
         }
         composable(route = Screen.GameScreen.route) {
-
             if (currentGame != null) {
                 GameScreen(
                     game = currentGame!!,

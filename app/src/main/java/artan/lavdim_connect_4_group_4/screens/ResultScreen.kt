@@ -36,8 +36,7 @@ fun ResultScreen(navController: NavController = rememberNavController(), gameVie
     ) {
         Image(
             painter = if (gameViewModel.playerWinner == SupabaseService.currentGame?.player1?.name ) painterResource(id = R.drawable.gold_coin)
-            else painterResource(id = R.drawable.silver_coin)
-            ,
+            else painterResource(id = R.drawable.silver_coin),
             contentDescription = "Gold Coin",
             modifier = Modifier
                 .width(110.dp)

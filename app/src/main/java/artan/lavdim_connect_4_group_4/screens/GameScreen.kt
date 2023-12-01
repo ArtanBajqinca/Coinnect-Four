@@ -30,20 +30,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import artan.lavdim_connect_4_group_4.Font.AvenirRoundedFontFamily
 import artan.lavdim_connect_4_group_4.R
-
 import artan.lavdim_connect_4_group_4.viewModels.GameViewModel
-import artan.lavdim_connect_4_group_4.viewModels.SharedViewModel
 import io.garrit.android.multiplayer.Game
 import kotlinx.coroutines.delay
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun GameScreen(game: Game, navController: NavController = rememberNavController(), gameViewModel: GameViewModel) {
+
     val currentPlayerName = if (gameViewModel.currentPlayer.value == GameViewModel.CellState.PLAYER1) {
         "${game.player1.name}'s turn"
     } else {
@@ -196,10 +194,8 @@ fun GameScreen(game: Game, navController: NavController = rememberNavController(
                 Column(
                     modifier = Modifier
                 ) {
-
                     Spacer(modifier = Modifier.height(30.dp))
                     Connect4Grid(gameViewModel)
-
                 }
                 Column(
                     modifier = Modifier
@@ -247,7 +243,6 @@ fun Connect4Grid(gameViewModel: GameViewModel) {
 @Composable
 fun CellView(cell: GameViewModel.Cell, isWinningCell: Boolean, onClick: () -> Unit) {
     val cellSize = 50.dp
-
     Box(
         modifier = Modifier
             .size(cellSize)
@@ -262,7 +257,6 @@ fun CellView(cell: GameViewModel.Cell, isWinningCell: Boolean, onClick: () -> Un
     ) {
         when (cell.state) {
             GameViewModel.CellState.EMPTY -> {
-
                 Box(modifier = Modifier
                     .size(cellSize)
                     .background(Color(0xFF282828), CircleShape))

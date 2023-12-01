@@ -33,7 +33,7 @@ fun SplashScreen(navController: NavController = rememberNavController()) {
                 }
             )
         )
-        delay(1500L) // change to 3000L when releasing and set to 1L for coding for faster startup
+        delay(1500L)
         navController.navigate(Screen.StartScreen.route)
     }
     Box(

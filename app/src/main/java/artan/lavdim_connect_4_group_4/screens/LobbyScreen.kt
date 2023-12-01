@@ -32,21 +32,20 @@ import io.garrit.android.multiplayer.Player
 import io.garrit.android.multiplayer.SupabaseService
 import io.garrit.android.multiplayer.SupabaseService.player
 
-
 @Composable
 fun LobbyScreen(navController: NavController, viewModel: SharedViewModel) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxWidth()
     ) {
-        Spacer(modifier = Modifier.height(50.dp))
+        Spacer(modifier = Modifier.height(40.dp))
 
         Image(
             painter = painterResource(id = R.drawable.coinnectfour),
             contentDescription = "Logo",
             modifier = Modifier.width(100.dp)
         )
-        Spacer(modifier = Modifier.height(30.dp))
+        Spacer(modifier = Modifier.height(20.dp))
 
         Text(
             text = "LOBBY",
@@ -94,7 +93,7 @@ fun LobbyScreen(navController: NavController, viewModel: SharedViewModel) {
                 ChallengeCard(navController,player, viewModel)
             }
         }
-        Spacer(modifier = Modifier.height(40.dp))
+        Spacer(modifier = Modifier.height(20.dp))
         Text(text = "Your Username: ${player?.name} ",
             style = AvenirTypography.displayMedium,
             textAlign = TextAlign.Center,
@@ -205,7 +204,6 @@ fun ChallengeCard(navController: NavController, player: Game, viewModel: SharedV
                     textAlign = TextAlign.Center
                 )
             }
-
             Button(
                 onClick = {
                           viewModel.declineInvite(player)

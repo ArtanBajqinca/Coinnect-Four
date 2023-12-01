@@ -2,13 +2,10 @@ package artan.lavdim_connect_4_group_4.viewModels
 
 import android.content.Context
 import android.media.MediaPlayer
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import artan.lavdim_connect_4_group_4.R
@@ -45,11 +42,8 @@ class SharedViewModel : ViewModel() {
         }
 }
 
-
-
 class GameViewModel : ViewModel(), SupabaseCallback {
         enum class CellState { EMPTY, PLAYER1, PLAYER2 }
-
         data class Cell(var state: CellState = CellState.EMPTY)
 
         private val _board = List(6) { mutableStateListOf<Cell>().apply { addAll(List(7) { Cell(CellState.EMPTY) }) } }
@@ -59,7 +53,6 @@ class GameViewModel : ViewModel(), SupabaseCallback {
         var playerWon = mutableStateOf(false)
         var playerWinner: String? by mutableStateOf(null)
         var winningPositions = mutableStateListOf<Pair<Int, Int>>()
-
         private var coinSoundMediaPlayer: MediaPlayer? = null
         private var winSoundMediaPlayer: MediaPlayer? = null
 
@@ -121,7 +114,8 @@ class GameViewModel : ViewModel(), SupabaseCallback {
 
                                         // Toggle the current player for the next turn
                                         currentPlayer.value =
-                                                if (currentPlayer.value == CellState.PLAYER1) CellState.PLAYER2 else CellState.PLAYER1
+                                                if (currentPlayer.value == CellState.PLAYER1) CellState.PLAYER2
+                                                else CellState.PLAYER1
                                         checkForWin()
                                         // Broadcast the move and change turn
                                         SupabaseService.releaseTurn()
@@ -133,7 +127,6 @@ class GameViewModel : ViewModel(), SupabaseCallback {
         }
 
         override suspend fun actionHandler(x: Int,y: Int) {
-
                 updateBoardFromRemote(x)
                 // will make a sound when opponent makes a move
                 playCoinSound()
