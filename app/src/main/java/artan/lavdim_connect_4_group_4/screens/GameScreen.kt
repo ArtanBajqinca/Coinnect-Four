@@ -24,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -48,11 +49,17 @@ fun GameScreen(game: Game, navController: NavController = rememberNavController(
     } else {
         "${game.player2.name}'s turn"
     }
+    val context = LocalContext.current
+
+    LaunchedEffect(Unit) {
+        gameViewModel.initializeMediaPlayers(context)
+    }
 
     LaunchedEffect(gameViewModel.playerWon.value) {
         if (gameViewModel.playerWon.value) {
             delay(2000)
             navController.navigate(Screen.ResultScreen.route)
+            gameViewModel.playWinSound()
         }
     }
 
@@ -224,6 +231,7 @@ fun Connect4Grid(gameViewModel: GameViewModel) {
                     for ((columnIndex, cell) in row.withIndex()) {
                         val isWinningCell = Pair(rowIndex, columnIndex) in gameViewModel.winningPositions
                         CellView(cell, isWinningCell, onClick = {
+                            gameViewModel.playCoinSound()
                             gameViewModel.dropPiece(columnIndex)
                         })
                     }
@@ -276,5 +284,3 @@ fun CellView(cell: GameViewModel.Cell, isWinningCell: Boolean, onClick: () -> Un
         }
     }
 }
-
-

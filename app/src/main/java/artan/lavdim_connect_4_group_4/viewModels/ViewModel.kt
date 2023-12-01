@@ -1,11 +1,17 @@
 package artan.lavdim_connect_4_group_4.viewModels
 
+import android.content.Context
+import android.media.MediaPlayer
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import artan.lavdim_connect_4_group_4.R
 import io.garrit.android.multiplayer.ActionResult
 import io.garrit.android.multiplayer.Game
 import io.garrit.android.multiplayer.GameResult
@@ -54,25 +60,36 @@ class GameViewModel : ViewModel(), SupabaseCallback {
         var playerWinner: String? by mutableStateOf(null)
         var winningPositions = mutableStateListOf<Pair<Int, Int>>()
 
-
+        private var coinSoundMediaPlayer: MediaPlayer? = null
+        private var winSoundMediaPlayer: MediaPlayer? = null
 
         init {
                 println("init")
                 SupabaseService.callbackHandler = this
                 val currentGame = SupabaseService.currentGame
                 val player = SupabaseService.player
+
                 if (currentGame != null && player != null) {
                         localPlayerTurn.value = player.id == currentGame.player1.id
                 }
         }
 
+        fun initializeMediaPlayers(context: Context) {
+                coinSoundMediaPlayer = MediaPlayer.create(context, R.raw.coin_2)
+                winSoundMediaPlayer = MediaPlayer.create(context, R.raw.win_sound)
+        }
+        fun playCoinSound() {
+                coinSoundMediaPlayer?.start()
+        }
+        fun playWinSound() {
+                winSoundMediaPlayer?.start()
+        }
+
         fun dropPiece(column: Int) {
                 viewModelScope.launch {
-
                         if (playerWon.value) {
                                 return@launch
                         }
-
                         if (localPlayerTurn.value) {
                                 for (row in _board.indices.reversed()) {
                                         if (_board[row][column].state == CellState.EMPTY) {
@@ -96,14 +113,39 @@ class GameViewModel : ViewModel(), SupabaseCallback {
                 }
         }
 
+        private fun updateBoardFromRemote(column: Int) {
+                viewModelScope.launch {
+                        for (row in _board.indices.reversed()) {
+                                if (_board[row][column].state == CellState.EMPTY) {
+                                        _board[row][column] = Cell(currentPlayer.value)
+
+                                        // Toggle the current player for the next turn
+                                        currentPlayer.value =
+                                                if (currentPlayer.value == CellState.PLAYER1) CellState.PLAYER2 else CellState.PLAYER1
+                                        checkForWin()
+                                        // Broadcast the move and change turn
+                                        SupabaseService.releaseTurn()
+                                        localPlayerTurn.value = true
+                                        break
+                                }
+                        }
+                }
+        }
+
+        override suspend fun actionHandler(x: Int,y: Int) {
+
+                updateBoardFromRemote(x)
+                // will make a sound when opponent makes a move
+                playCoinSound()
+        }
+
         private fun checkForWin() {
+
                 for (row in 0 until 6) {
                         for (col in 0 until 7) {
                                 val cell = board[row][col]
                                 if (cell.state != CellState.EMPTY) {
-                                        // Check for wins in horizontal, vertical, and diagonal directions
                                         if (checkHorizontalWin(row, col) || checkVerticalWin(row, col) || checkDiagonalWin(row, col)) {
-                                                // Declare the current player as the winner
                                                 println("Player ${cell.state} wins!")
                                                 playerWon.value = true
                                                 playerWinner = if (cell.state == CellState.PLAYER1) currentGame?.player1?.name
@@ -111,6 +153,7 @@ class GameViewModel : ViewModel(), SupabaseCallback {
                                                 return
                                         }
                                 }
+
                         }
                 }
         }
@@ -150,29 +193,6 @@ class GameViewModel : ViewModel(), SupabaseCallback {
                 return false
         }
 
-        override suspend fun actionHandler(x: Int,y: Int) {
-                updateBoardFromRemote(x)
-        }
-
-        private fun updateBoardFromRemote(column: Int) {
-                viewModelScope.launch {
-                        for (row in _board.indices.reversed()) {
-                                if (_board[row][column].state == CellState.EMPTY) {
-                                        _board[row][column] = Cell(currentPlayer.value)
-
-                                        // Toggle the current player for the next turn
-                                        currentPlayer.value =
-                                                if (currentPlayer.value == CellState.PLAYER1) CellState.PLAYER2 else CellState.PLAYER1
-                                        checkForWin()
-                                        // Broadcast the move and change turn
-                                        SupabaseService.releaseTurn()
-                                        localPlayerTurn.value = true
-
-                                        break
-                                }
-                        }
-                }
-        }
         fun leaveGame(){
                 viewModelScope.launch {
                         SupabaseService.leaveGame()

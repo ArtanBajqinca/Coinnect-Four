@@ -55,6 +55,7 @@ fun Navigation() {
             )
         }
         composable(route = Screen.GameScreen.route) {
+
             if (currentGame != null) {
                 GameScreen(
                     game = currentGame!!,
