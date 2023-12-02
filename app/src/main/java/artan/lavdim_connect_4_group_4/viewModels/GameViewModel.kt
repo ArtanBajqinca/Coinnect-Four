@@ -28,6 +28,7 @@ class GameViewModel : ViewModel(), SupabaseCallback {
     var winningPositions = mutableStateListOf<Pair<Int, Int>>()
     private var coinSoundMediaPlayer: MediaPlayer? = null
     private var winSoundMediaPlayer: MediaPlayer? = null
+    var boardIsFull = mutableStateOf(false)
 
     init {
         println("init")
@@ -106,10 +107,13 @@ class GameViewModel : ViewModel(), SupabaseCallback {
     }
 
     private fun checkForWin() {
+        var isBoardFull = true
 
         for (row in 0 until 6) {
             for (col in 0 until 7) {
                 val cell = board[row][col]
+
+                // Check for a win condition
                 if (cell.state != CellState.EMPTY) {
                     if (checkHorizontalWin(row, col) || checkVerticalWin(row, col) || checkDiagonalWin(row, col)) {
                         println("Player ${cell.state} wins!")
@@ -118,11 +122,20 @@ class GameViewModel : ViewModel(), SupabaseCallback {
                         else SupabaseService.currentGame?.player2?.name
                         return
                     }
+                } else {
+                    // Check if the board is still not full
+                    isBoardFull = false
                 }
-
             }
         }
+
+        // Check if the board is full and no win condition is met
+        if (isBoardFull) {
+            println("It's a draw!")
+            boardIsFull.value = true
+        }
     }
+
 
     private fun checkHorizontalWin(row: Int, col: Int): Boolean {
         if (col + 3 < 7 && board[row][col].state == board[row][col + 1].state &&

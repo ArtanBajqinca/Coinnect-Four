@@ -61,6 +61,13 @@ fun GameScreen(game: Game, navController: NavController = rememberNavController(
         }
     }
 
+    LaunchedEffect(gameViewModel.boardIsFull.value) {
+        if (gameViewModel.boardIsFull.value) {
+            delay(2000)
+            navController.navigate(Screen.ResultScreen.route)
+        }
+    }
+
     Box(
         modifier = Modifier
             .fillMaxWidth()

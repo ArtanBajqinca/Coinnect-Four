@@ -34,16 +34,23 @@ fun ResultScreen(navController: NavController = rememberNavController(), gameVie
         modifier = Modifier
 
     ) {
-        Image(
-            painter = if (gameViewModel.playerWinner == SupabaseService.currentGame?.player1?.name ) painterResource(id = R.drawable.gold_coin)
-            else painterResource(id = R.drawable.silver_coin),
-            contentDescription = "Gold Coin",
-            modifier = Modifier
-                .width(110.dp)
-                .height(110.dp)
-        )
+        (if (gameViewModel.playerWinner == SupabaseService.currentGame?.player1?.name)
+            painterResource(id = R.drawable.gold_coin)
+        else if (gameViewModel.playerWinner == SupabaseService.currentGame?.player2?.name)
+            painterResource(id = R.drawable.silver_coin)
+        else
+            null)?.let {
+            Image(
+                painter = it,  // Provide null for the else case
+                contentDescription = "",
+                modifier = Modifier
+                    .width(110.dp)
+                    .height(110.dp)
+            )
+        }
         Text(
-            text = "${gameViewModel.playerWinner} Won!",
+            text = if (gameViewModel.boardIsFull.value) "It's a draw!"
+            else "${gameViewModel.playerWinner} Won!",
             color = Color(0xFFD9D9D9),
             fontWeight = FontWeight.Bold,
             fontFamily = AvenirRoundedFontFamily,
@@ -62,7 +69,6 @@ fun ResultScreen(navController: NavController = rememberNavController(), gameVie
             colors = ButtonDefaults.buttonColors(
                 containerColor = if (gameViewModel.playerWinner == SupabaseService.currentGame?.player1?.name ) Color(0xFFBAA153)
                 else Color(0xFFD9D9D9)
-
             ),
             modifier = Modifier
                 .padding(top = 30.dp)
