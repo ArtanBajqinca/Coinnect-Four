@@ -36,6 +36,8 @@ import artan.lavdim_connect_4_group_4.Font.AvenirRoundedFontFamily
 import artan.lavdim_connect_4_group_4.R
 import artan.lavdim_connect_4_group_4.viewModels.GameViewModel
 import io.garrit.android.multiplayer.Game
+import io.garrit.android.multiplayer.GameResult
+import io.garrit.android.multiplayer.SupabaseService
 import kotlinx.coroutines.delay
 
 @SuppressLint("StateFlowValueCalledInComposition")
@@ -55,6 +57,7 @@ fun GameScreen(game: Game, navController: NavController = rememberNavController(
 
     LaunchedEffect(gameViewModel.playerWon.value) {
         if (gameViewModel.playerWon.value) {
+            SupabaseService.gameFinish(GameResult.WIN)
             delay(2000)
             navController.navigate(Screen.ResultScreen.route)
             gameViewModel.playWinSound()
@@ -63,6 +66,7 @@ fun GameScreen(game: Game, navController: NavController = rememberNavController(
 
     LaunchedEffect(gameViewModel.boardIsFull.value) {
         if (gameViewModel.boardIsFull.value) {
+            SupabaseService.gameFinish(GameResult.DRAW)
             delay(2000)
             navController.navigate(Screen.ResultScreen.route)
         }
