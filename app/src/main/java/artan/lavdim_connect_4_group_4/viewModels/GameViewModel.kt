@@ -136,7 +136,6 @@ class GameViewModel : ViewModel(), SupabaseCallback {
         }
     }
 
-
     private fun checkHorizontalWin(row: Int, col: Int): Boolean {
         if (col + 3 < 7 && board[row][col].state == board[row][col + 1].state &&
             board[row][col].state == board[row][col + 2].state &&
@@ -182,10 +181,11 @@ class GameViewModel : ViewModel(), SupabaseCallback {
         TODO("Not yet implemented")
     }
 
+
+    override suspend fun releaseTurnHandler() {
+    }
     override suspend fun answerHandler(status: ActionResult) {
         // Do not use
-    }
-    override suspend fun releaseTurnHandler() {
     }
     override suspend fun finishHandler(status: GameResult) {
         // Do not use

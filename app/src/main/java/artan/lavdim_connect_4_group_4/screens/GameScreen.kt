@@ -24,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -61,7 +62,8 @@ fun GameScreen(game: Game, navController: NavController = rememberNavController(
             delay(2000)
             navController.navigate(Screen.ResultScreen.route)
             gameViewModel.playWinSound()
-        }
+        } // else SupabaseService.gameFinish(GameResult.LOSE) ??
+
     }
 
     LaunchedEffect(gameViewModel.boardIsFull.value) {
@@ -128,7 +130,7 @@ fun GameScreen(game: Game, navController: NavController = rememberNavController(
                             .align(CenterHorizontally)
                     ){
                         Image(
-                            painter = painterResource(id = R.drawable.gold_coin),
+                            painter = painterResource(id = R.drawable.gold_coin_midres),
                             contentDescription = "Gold Coin",
                             modifier = Modifier
                                 .width(50.dp)
@@ -178,7 +180,7 @@ fun GameScreen(game: Game, navController: NavController = rememberNavController(
                             .align(CenterHorizontally)
                     ){
                         Image(
-                            painter = painterResource(id = R.drawable.silver_coin),
+                            painter = painterResource(id = R.drawable.silver_coin_midres),
                             contentDescription = "Silver Coin",
                             modifier = Modifier
                                 .width(50.dp)
@@ -210,7 +212,7 @@ fun GameScreen(game: Game, navController: NavController = rememberNavController(
                 }
                 Column(
                     modifier = Modifier
-                        .padding(top = 80.dp)
+                        .padding(top = 60.dp)
                 ) {
                     Image(
                         painter = painterResource(id = R.drawable.coinnectfour),
@@ -248,12 +250,9 @@ fun Connect4Grid(gameViewModel: GameViewModel) {
     }
 }
 
-
-
-
 @Composable
 fun CellView(cell: GameViewModel.Cell, isWinningCell: Boolean, onClick: () -> Unit) {
-    val cellSize = 50.dp
+    val cellSize = (LocalConfiguration.current.screenWidthDp.dp * 0.84f) / 7
     Box(
         modifier = Modifier
             .size(cellSize)
@@ -274,14 +273,14 @@ fun CellView(cell: GameViewModel.Cell, isWinningCell: Boolean, onClick: () -> Un
             }
             GameViewModel.CellState.PLAYER1 -> {
                 Image(
-                    painter = painterResource(id = R.drawable.gold_coin),
+                    painter = painterResource(id = R.drawable.gold_coin_lowres),
                     contentDescription = "Gold Coin",
                     modifier = Modifier.size(cellSize)
                 )
             }
             GameViewModel.CellState.PLAYER2 -> {
                 Image(
-                    painter = painterResource(id = R.drawable.silver_coin),
+                    painter = painterResource(id = R.drawable.silver_coin_lowres),
                     contentDescription = "Silver Coin",
                     modifier = Modifier.size(cellSize)
                 )
