@@ -67,6 +67,7 @@ class GameViewModel : ViewModel(), SupabaseCallback {
                             if (currentPlayer.value == CellState.PLAYER1) CellState.PLAYER2 else CellState.PLAYER1
 
                         // Broadcast the move and change turn
+                        playCoinSound()
                         SupabaseService.sendTurn(column)
                         localPlayerTurn.value = false
 
@@ -92,6 +93,7 @@ class GameViewModel : ViewModel(), SupabaseCallback {
                         else CellState.PLAYER1
                     checkForWin()
                     // Broadcast the move and change turn
+                    playCoinSound()
                     SupabaseService.releaseTurn()
                     localPlayerTurn.value = true
                     break
