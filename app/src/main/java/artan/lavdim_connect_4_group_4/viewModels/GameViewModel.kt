@@ -54,6 +54,7 @@ class GameViewModel : ViewModel(), SupabaseCallback {
     }
 
     fun dropPiece(column: Int) {
+
         viewModelScope.launch {
             if (playerWon.value) {
                 return@launch
@@ -62,6 +63,7 @@ class GameViewModel : ViewModel(), SupabaseCallback {
                 for (row in _board.indices.reversed()) {
                     if (_board[row][column].state == CellState.EMPTY) {
                         _board[row][column] = Cell(currentPlayer.value)
+                        playCoinSound()
 
                         // Toggle the current player for the next turn
                         currentPlayer.value =
@@ -86,7 +88,7 @@ class GameViewModel : ViewModel(), SupabaseCallback {
             for (row in _board.indices.reversed()) {
                 if (_board[row][column].state == CellState.EMPTY) {
                     _board[row][column] = Cell(currentPlayer.value)
-
+                    playCoinSound()
                     // Toggle the current player for the next turn
                     currentPlayer.value =
                         if (currentPlayer.value == CellState.PLAYER1) CellState.PLAYER2
@@ -103,8 +105,6 @@ class GameViewModel : ViewModel(), SupabaseCallback {
 
     override suspend fun actionHandler(x: Int,y: Int) {
         updateBoardFromRemote(x)
-        // will make a sound when opponent makes a move
-        playCoinSound()
     }
 
     private fun checkForWin() {
