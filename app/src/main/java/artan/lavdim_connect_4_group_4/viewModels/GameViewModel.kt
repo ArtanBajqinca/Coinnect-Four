@@ -41,6 +41,7 @@ class GameViewModel : ViewModel(), SupabaseCallback {
         }
     }
 
+
     fun initializeMediaPlayers(context: Context) {
         coinSoundMediaPlayer = MediaPlayer.create(context, R.raw.coin_2)
         winSoundMediaPlayer = MediaPlayer.create(context, R.raw.win_sound)

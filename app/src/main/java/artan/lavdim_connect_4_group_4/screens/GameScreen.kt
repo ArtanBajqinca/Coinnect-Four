@@ -275,7 +275,8 @@ fun CellView(cell: GameViewModel.Cell, isWinningCell: Boolean, onClick: () -> Un
                 Image(
                     painter = painterResource(id = R.drawable.gold_coin_lowres),
                     contentDescription = "Gold Coin",
-                    modifier = Modifier.size(cellSize)
+                    modifier = Modifier
+                        .size(cellSize)
                 )
             }
             GameViewModel.CellState.PLAYER2 -> {
