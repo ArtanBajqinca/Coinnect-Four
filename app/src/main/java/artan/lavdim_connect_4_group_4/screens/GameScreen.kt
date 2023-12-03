@@ -240,6 +240,7 @@ fun Connect4Grid(gameViewModel: GameViewModel) {
                     for ((columnIndex, cell) in row.withIndex()) {
                         val isWinningCell = Pair(rowIndex, columnIndex) in gameViewModel.winningPositions
                         CellView(cell, isWinningCell, onClick = {
+                            gameViewModel.playCoinSound()
                             gameViewModel.dropPiece(columnIndex)
                         })
                     }
