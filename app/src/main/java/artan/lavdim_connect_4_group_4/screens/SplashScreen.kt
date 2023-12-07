@@ -16,15 +16,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import artan.lavdim_connect_4_group_4.R
+import artan.lavdim_connect_4_group_4.viewModels.SharedViewModel
 import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen(navController: NavController = rememberNavController()) {
-    val scale = remember {
-        Animatable(0f)
-    }
+fun SplashScreen(navController: NavController = rememberNavController(), viewModel: SharedViewModel) {
     LaunchedEffect(key1 = true) {
-        scale.animateTo(
+        viewModel.scale.animateTo(
             targetValue = 0.7f,
             animationSpec = tween(
                 durationMillis = 500,
@@ -44,7 +42,7 @@ fun SplashScreen(navController: NavController = rememberNavController()) {
         Image(
             painter = painterResource(id = R.drawable.coinnectfour),
             contentDescription = "Logo",
-            modifier = Modifier.scale(scale.value)
+            modifier = Modifier.scale(viewModel.scale.value)
         )
     }
 }
