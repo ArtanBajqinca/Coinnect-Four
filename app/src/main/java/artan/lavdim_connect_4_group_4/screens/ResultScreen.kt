@@ -25,7 +25,6 @@ import artan.lavdim_connect_4_group_4.Font.AvenirRoundedFontFamily
 import artan.lavdim_connect_4_group_4.R
 import artan.lavdim_connect_4_group_4.viewModels.GameViewModel
 import io.garrit.android.multiplayer.SupabaseService
-
 @Composable
 fun ResultScreen(navController: NavController = rememberNavController(), gameViewModel: GameViewModel) {
     Column (
@@ -34,20 +33,27 @@ fun ResultScreen(navController: NavController = rememberNavController(), gameVie
         modifier = Modifier
 
     ) {
-        (if (gameViewModel.playerWinner == SupabaseService.currentGame?.player1?.name)
-            painterResource(id = R.drawable.gold_coin)
-        else if (gameViewModel.playerWinner == SupabaseService.currentGame?.player2?.name)
-            painterResource(id = R.drawable.silver_coin)
-        else
-            null)?.let {
+        val imageResource = when {
+            gameViewModel.playerWinner == SupabaseService.currentGame?.player1?.name ->
+                R.drawable.gold_coin
+            gameViewModel.playerWinner == SupabaseService.currentGame?.player2?.name ->
+                R.drawable.silver_coin
+            gameViewModel.boardIsFull.value ->
+                R.drawable.draw_coins
+            else -> null
+        }
+
+        imageResource?.let {
             Image(
-                painter = it,  // Provide null for the else case
+                painter = painterResource(id = it),
                 contentDescription = "",
                 modifier = Modifier
                     .width(110.dp)
                     .height(110.dp)
             )
         }
+
+
         Text(
             text = if (gameViewModel.boardIsFull.value) "It's a draw!"
             else "${gameViewModel.playerWinner} Won!",

@@ -42,6 +42,7 @@ class GameViewModel : ViewModel(), SupabaseCallback {
         }
     }
 
+
     fun initializeMediaPlayers(context: Context) {
         coinSoundMediaPlayer = MediaPlayer.create(context, R.raw.coin_2)
         winSoundMediaPlayer = MediaPlayer.create(context, R.raw.win_sound)
@@ -54,6 +55,7 @@ class GameViewModel : ViewModel(), SupabaseCallback {
     }
 
     fun dropPiece(column: Int) {
+
         viewModelScope.launch {
             if (playerWon.value) {
                 return@launch
@@ -62,13 +64,13 @@ class GameViewModel : ViewModel(), SupabaseCallback {
                 for (row in _board.indices.reversed()) {
                     if (_board[row][column].state == CellState.EMPTY) {
                         _board[row][column] = Cell(currentPlayer.value)
+                        playCoinSound()
 
                         // Toggle the current player for the next turn
                         currentPlayer.value =
                             if (currentPlayer.value == CellState.PLAYER1) CellState.PLAYER2 else CellState.PLAYER1
 
                         // Broadcast the move and change turn
-                        playCoinSound()
                         SupabaseService.sendTurn(column)
                         localPlayerTurn.value = false
 
@@ -87,14 +89,13 @@ class GameViewModel : ViewModel(), SupabaseCallback {
             for (row in _board.indices.reversed()) {
                 if (_board[row][column].state == CellState.EMPTY) {
                     _board[row][column] = Cell(currentPlayer.value)
-
+                    playCoinSound()
                     // Toggle the current player for the next turn
                     currentPlayer.value =
                         if (currentPlayer.value == CellState.PLAYER1) CellState.PLAYER2
                         else CellState.PLAYER1
                     checkForWin()
                     // Broadcast the move and change turn
-                    playCoinSound()
                     SupabaseService.releaseTurn()
                     localPlayerTurn.value = true
                     break
@@ -105,8 +106,6 @@ class GameViewModel : ViewModel(), SupabaseCallback {
 
     override suspend fun actionHandler(x: Int,y: Int) {
         updateBoardFromRemote(x)
-        // will make a sound when opponent makes a move
-        playCoinSound()
     }
 
     private fun checkForWin() {
