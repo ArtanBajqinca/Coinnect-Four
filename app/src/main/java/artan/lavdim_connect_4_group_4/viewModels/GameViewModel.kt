@@ -20,7 +20,7 @@ class GameViewModel : ViewModel(), SupabaseCallback {
     enum class CellState { EMPTY, PLAYER1, PLAYER2 }
     data class Cell(var state: CellState = CellState.EMPTY)
 
-    private val _board = List(6) { mutableStateListOf<Cell>().apply { addAll(List(7) { Cell(CellState.EMPTY) }) } }
+    private val _board = List(6) { MutableList(7) { Cell(CellState.EMPTY) } }
     val board: List<MutableList<Cell>> = _board
     var currentPlayer = mutableStateOf(CellState.PLAYER1)
     private var localPlayerTurn = mutableStateOf(true)
@@ -157,6 +157,7 @@ class GameViewModel : ViewModel(), SupabaseCallback {
         return false
     }
 
+    // reference: checkWinDiagonal
     private fun checkDiagonalWin(row: Int, col: Int): Boolean {
         if (col + 3 < 7 && row - 3 >= 0 && board[row][col].state == board[row - 1][col + 1].state &&
             board[row][col].state == board[row - 2][col + 2].state &&
@@ -181,7 +182,6 @@ class GameViewModel : ViewModel(), SupabaseCallback {
     override suspend fun playerReadyHandler() {
         TODO("Not yet implemented")
     }
-
 
     override suspend fun releaseTurnHandler() {
     }
