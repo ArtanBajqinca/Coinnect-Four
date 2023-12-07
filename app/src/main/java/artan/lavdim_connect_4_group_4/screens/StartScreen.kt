@@ -46,8 +46,6 @@ import io.garrit.android.multiplayer.Player
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StartScreen(navController: NavController = rememberNavController(), viewModel: SharedViewModel) {
-    var username by rememberSaveable { mutableStateOf("") }
-
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -73,8 +71,8 @@ fun StartScreen(navController: NavController = rememberNavController(), viewMode
                 .border(width = 3.dp, color = Color(0xFFBAA153), shape = RoundedCornerShape(15.dp))
         ) {
             TextField(
-                value = username,
-                onValueChange = { username = it },
+                value = viewModel.username.value,
+                onValueChange = { viewModel.username.value = it },
                 singleLine = true,
                 textStyle = TextStyle(
                     textAlign = TextAlign.Center,
@@ -99,7 +97,7 @@ fun StartScreen(navController: NavController = rememberNavController(), viewMode
 
         Button(
             onClick = {
-                viewModel.joinLobby(Player(name = username))
+                viewModel.joinLobby(Player(name = viewModel.username.value))
                 navController.navigate(Screen.LobbyScreen.route)
             },
             shape = RoundedCornerShape(12.dp),

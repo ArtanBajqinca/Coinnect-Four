@@ -148,7 +148,6 @@ fun UserCard(player: Player, viewModel: SharedViewModel) {
 
 @Composable
 fun ChallengeCard(navController: NavController, player: Game, viewModel: SharedViewModel) {
-
     Column {
         Text(
             text = buildAnnotatedString {

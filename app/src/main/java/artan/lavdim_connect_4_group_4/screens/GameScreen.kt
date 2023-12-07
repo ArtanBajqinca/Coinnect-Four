@@ -46,9 +46,9 @@ import kotlinx.coroutines.delay
 fun GameScreen(game: Game, navController: NavController = rememberNavController(), gameViewModel: GameViewModel) {
 
     val currentPlayerName = if (gameViewModel.currentPlayer.value == GameViewModel.CellState.PLAYER1) {
-        "${game.player1.name}'s turn"
+        "${SupabaseService.currentGame?.player1?.name}'s turn"
     } else {
-        "${game.player2.name}'s turn"
+        "${SupabaseService.currentGame?.player2?.name}'s turn"
     }
     val context = LocalContext.current
 
@@ -62,8 +62,7 @@ fun GameScreen(game: Game, navController: NavController = rememberNavController(
             delay(2000)
             navController.navigate(Screen.ResultScreen.route)
             gameViewModel.playWinSound()
-        } // else SupabaseService.gameFinish(GameResult.LOSE) ??
-
+        }
     }
 
     LaunchedEffect(gameViewModel.boardIsFull.value) {

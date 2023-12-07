@@ -38,7 +38,11 @@ fun Navigation() {
 
     NavHost(navController = navController, startDestination = Screen.SplashScreen.route) {
         composable(route = Screen.SplashScreen.route) {
-            SplashScreen(navController )
+            SplashScreen(
+                navController,
+                sharedViewModel
+            )
+
         }
         composable(route = Screen.StartScreen.route) {
             StartScreen(
