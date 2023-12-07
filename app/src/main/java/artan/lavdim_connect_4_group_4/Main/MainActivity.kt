@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = Color(0xFF282828)
                 ) {
-                    backgroundImage()
+                    BackgroundImage()
                     Navigation()
                 }
         }
@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun backgroundImage() {
+fun BackgroundImage() {
     val image = painterResource(id = R.drawable.background);
     Image(
         painter = image,

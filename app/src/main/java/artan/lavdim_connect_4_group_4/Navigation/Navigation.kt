@@ -25,6 +25,7 @@ fun Navigation() {
     val navController = rememberNavController()
     val serverState = SupabaseService.serverState.collectAsState()
 
+    // reference: serverState
     LaunchedEffect(serverState.value) {
         when (serverState.value) {
             ServerState.LOADING_GAME, ServerState.GAME -> {

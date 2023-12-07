@@ -43,7 +43,7 @@ import artan.lavdim_connect_4_group_4.R
 import artan.lavdim_connect_4_group_4.viewModels.SharedViewModel
 import io.garrit.android.multiplayer.Player
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class) // for fixing textFieldColors
 @Composable
 fun StartScreen(navController: NavController = rememberNavController(), viewModel: SharedViewModel) {
     var username by rememberSaveable { mutableStateOf("") }

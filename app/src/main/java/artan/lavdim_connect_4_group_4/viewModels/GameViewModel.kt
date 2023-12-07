@@ -41,7 +41,6 @@ class GameViewModel : ViewModel(), SupabaseCallback {
         }
     }
 
-
     fun initializeMediaPlayers(context: Context) {
         coinSoundMediaPlayer = MediaPlayer.create(context, R.raw.coin_2)
         winSoundMediaPlayer = MediaPlayer.create(context, R.raw.win_sound)
@@ -52,9 +51,7 @@ class GameViewModel : ViewModel(), SupabaseCallback {
     fun playWinSound() {
         winSoundMediaPlayer?.start()
     }
-
     fun dropPiece(column: Int) {
-
         viewModelScope.launch {
             if (playerWon.value) {
                 return@launch
@@ -83,6 +80,7 @@ class GameViewModel : ViewModel(), SupabaseCallback {
         }
     }
 
+    // reference: updateBoard
     private fun updateBoardFromRemote(column: Int) {
         viewModelScope.launch {
             for (row in _board.indices.reversed()) {
@@ -137,6 +135,7 @@ class GameViewModel : ViewModel(), SupabaseCallback {
         }
     }
 
+    // reference: checkWin
     private fun checkHorizontalWin(row: Int, col: Int): Boolean {
         if (col + 3 < 7 && board[row][col].state == board[row][col + 1].state &&
             board[row][col].state == board[row][col + 2].state &&

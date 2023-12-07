@@ -62,7 +62,7 @@ fun GameScreen(game: Game, navController: NavController = rememberNavController(
             delay(2000)
             navController.navigate(Screen.ResultScreen.route)
             gameViewModel.playWinSound()
-        } // else SupabaseService.gameFinish(GameResult.LOSE) ??
+        }
 
     }
 
@@ -234,6 +234,8 @@ fun Connect4Grid(gameViewModel: GameViewModel) {
             .padding(16.dp)
     ) {
         // Grid of clickable cells
+
+        // garret workshop
         Column {
             for ((rowIndex, row) in gameViewModel.board.withIndex()) {
                 Row {
@@ -246,6 +248,7 @@ fun Connect4Grid(gameViewModel: GameViewModel) {
                 }
             }
         }
+        // garret workshop
     }
 }
 

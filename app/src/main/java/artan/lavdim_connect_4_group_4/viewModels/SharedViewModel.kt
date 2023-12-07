@@ -29,4 +29,10 @@ class SharedViewModel : ViewModel() {
             SupabaseService.acceptInvite(game)
         }
     }
+
+    fun playerReady(){
+        viewModelScope.launch {
+            SupabaseService.playerReady()
+        }
+    }
 }
