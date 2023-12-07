@@ -34,11 +34,8 @@ class GameViewModel : ViewModel(), SupabaseCallback {
     init {
         println("init")
         SupabaseService.callbackHandler = this
-        val currentGame = SupabaseService.currentGame
-        val player = SupabaseService.player
-
-        if (currentGame != null && player != null) {
-            localPlayerTurn.value = player.id == currentGame.player1.id
+        if (SupabaseService.currentGame != null && SupabaseService.player != null) {
+            localPlayerTurn.value = SupabaseService.player!!.id == SupabaseService.currentGame!!.player1.id
         }
     }
 
@@ -178,11 +175,11 @@ class GameViewModel : ViewModel(), SupabaseCallback {
         }
     }
 
+
+
     override suspend fun playerReadyHandler() {
         TODO("Not yet implemented")
     }
-
-
     override suspend fun releaseTurnHandler() {
     }
     override suspend fun answerHandler(status: ActionResult) {

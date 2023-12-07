@@ -14,6 +14,7 @@ import io.garrit.android.multiplayer.SupabaseService
 import kotlinx.coroutines.launch
 
 class SharedViewModel : ViewModel() {
+
     val username = mutableStateOf("")
 
     val scale = Animatable(0f)
