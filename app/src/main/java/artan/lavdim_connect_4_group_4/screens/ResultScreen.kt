@@ -52,8 +52,6 @@ fun ResultScreen(navController: NavController = rememberNavController(), gameVie
                     .height(110.dp)
             )
         }
-
-
         Text(
             text = if (gameViewModel.boardIsFull.value) "It's a draw!"
             else "${gameViewModel.playerWinner} Won!",
@@ -65,7 +63,6 @@ fun ResultScreen(navController: NavController = rememberNavController(), gameVie
             modifier = Modifier
                 .padding(top = 30.dp)
         )
-
         Button(
             onClick = {
                 gameViewModel.leaveGame()

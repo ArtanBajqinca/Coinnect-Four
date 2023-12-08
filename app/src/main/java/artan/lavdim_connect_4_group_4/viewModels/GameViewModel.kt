@@ -49,6 +49,7 @@ class GameViewModel : ViewModel(), SupabaseCallback {
     fun playWinSound() {
         winSoundMediaPlayer?.start()
     }
+
     fun dropPiece(column: Int) {
         viewModelScope.launch {
             if (playerWon.value) {
@@ -60,15 +61,12 @@ class GameViewModel : ViewModel(), SupabaseCallback {
                         _board[row][column] = Cell(currentPlayer.value)
                         playCoinSound()
 
-                        // Toggle the current player for the next turn
                         currentPlayer.value =
                             if (currentPlayer.value == CellState.PLAYER1) CellState.PLAYER2 else CellState.PLAYER1
 
-                        // Broadcast the move and change turn
                         SupabaseService.sendTurn(column)
                         localPlayerTurn.value = false
 
-                        // Check for a win condition after the move
                         checkForWin()
 
                         break
@@ -85,12 +83,12 @@ class GameViewModel : ViewModel(), SupabaseCallback {
                 if (_board[row][column].state == CellState.EMPTY) {
                     _board[row][column] = Cell(currentPlayer.value)
                     playCoinSound()
-                    // Toggle the current player for the next turn
+
                     currentPlayer.value =
                         if (currentPlayer.value == CellState.PLAYER1) CellState.PLAYER2
                         else CellState.PLAYER1
                     checkForWin()
-                    // Broadcast the move and change turn
+
                     SupabaseService.releaseTurn()
                     localPlayerTurn.value = true
                     break
@@ -110,7 +108,7 @@ class GameViewModel : ViewModel(), SupabaseCallback {
             for (col in 0 until 7) {
                 val cell = board[row][col]
 
-                // Check for a win condition
+                // Check win condition
                 if (cell.state != CellState.EMPTY) {
                     if (checkHorizontalWin(row, col) || checkVerticalWin(row, col) || checkDiagonalWin(row, col)) {
                         println("Player ${cell.state} wins!")

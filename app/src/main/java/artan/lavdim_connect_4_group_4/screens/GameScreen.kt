@@ -138,7 +138,6 @@ fun GameScreen(game: Game, navController: NavController = rememberNavController(
                         )
                     }
                 }
-
                 Text(
                     "VS",
                     color = Color(0xFFD9D9D9),
@@ -149,7 +148,6 @@ fun GameScreen(game: Game, navController: NavController = rememberNavController(
                     modifier = Modifier
                         .padding(start = 30.dp, top = 38.dp, end = 30.dp)
                 )
-
                 Column {
                     Box(
                         modifier = Modifier
@@ -233,9 +231,10 @@ fun Connect4Grid(gameViewModel: GameViewModel) {
             .background(Color(0xFF383838), shape = RoundedCornerShape(40.dp))
             .padding(16.dp)
     ) {
+
         // Grid of clickable cells
 
-        // garret workshop
+        // reference: garret workshop
         Column {
             for ((rowIndex, row) in gameViewModel.board.withIndex()) {
                 Row {
@@ -248,7 +247,7 @@ fun Connect4Grid(gameViewModel: GameViewModel) {
                 }
             }
         }
-        // garret workshop
+        // reference: garret workshop
     }
 }
 

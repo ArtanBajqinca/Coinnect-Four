@@ -45,18 +45,21 @@ fun Navigation() {
             )
 
         }
+
         composable(route = Screen.StartScreen.route) {
             StartScreen(
                 navController,
                 sharedViewModel
             )
         }
+
         composable(route = Screen.LobbyScreen.route) {
             LobbyScreen(
                 navController,
                 sharedViewModel,
             )
         }
+
         composable(route = Screen.GameScreen.route) {
             if (currentGame != null) {
                 GameScreen(
